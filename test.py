@@ -51,6 +51,7 @@ print(x - y)
 print(x / y)
 print(x * y)
 print(x % y)
+print(x // y)
 print()
 print(f'Sum: {x} + {y} = {x + y}')
 
@@ -61,6 +62,10 @@ print(f'Div: {x} / {y} = {x / y}')
 print(f'Mult: {x} * {y} = {x * y}')
 
 print(f'Modul: {x} % {y} = {x % y}')
+
+print(f'Integer devision: {x} // {y} = {x // y}')
+
+
 print()
 print(f'Text: {paragraph_text}')
 print()
