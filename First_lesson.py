@@ -76,3 +76,4 @@ comparison_result = x == y
 print(f'Comparing {x} and {y}: {comparison_result}')
 
 print(f'Is {x} less than {y}: {x<y}')
+

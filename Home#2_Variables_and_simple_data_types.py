@@ -38,18 +38,18 @@ name = name.upper()
 print()
 print(name)
 print("Number of 'S' letter:", name.count('S'))
-name = name.replace('ERHII',"erhii")+' '
+name = name.replace('ERHII',"erhii")
 print(name)
 print(name.index('S'))
 print()
 print(name[0],name[1],name[2],name[3],name[4],name[5])
-print(name[-7:-1])
+print(name[-6:])
 first_name = "Serhii"
 last_name = "Shostak"
 middle_name = "Oleksiyovich"
 print(f'Last name is: {last_name},\nFirst name is: {first_name},\nMiddle name is: {middle_name}')
 initials = last_name[0] + first_name[0]
-print("Hello World, your",initials)
+print(f"Hello World, your" + ' ' + initials)
 print()
 print("Task#3 Python show me your math skills! :")
 print()
