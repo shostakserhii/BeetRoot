@@ -50,6 +50,8 @@ middle_name = "Oleksiyovich"
 print(f'Last name is: {last_name},\nFirst name is: {first_name},\nMiddle name is: {middle_name}')
 initials = last_name[0] + first_name[0]
 print(f"Hello World, your" + ' ' + initials)
+greeting = 'Hello world, yours {}'
+print(greeting.format(initials))
 print()
 print("Task#3 Python show me your math skills! :")
 print()
