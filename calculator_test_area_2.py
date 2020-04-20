@@ -7,7 +7,6 @@ while True:
         break
     elif user_name_inp.isalpha():
         while True:
-            operation = input(f"\n{user_name_inp.capitalize()}, please, choose operation and enter it's sign: ")
             print(" Enter '+' for Addition ")
             print(" Enter '-' for Subtraction ")
             print(" Enter '/' for Division ")
@@ -18,6 +17,7 @@ while True:
             print(" Enter '*s' for Perfect Square ")
             print(" Enter 'r' for Rounding")
             print(" Enter 'end' to close application")
+            operation = input(f"\n{user_name_inp.capitalize()}, please, choose operation and enter it's sign: ")
             if operation != 'end':
                 if operation=='+':
                     while True:
@@ -32,65 +32,103 @@ while True:
                                 digit_second = float(digit_second)
                                 print(f"Addition: {digit_first} + {digit_second} = {digit_first+digit_second} ")
                             else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
-                    continue    
+                    continue
                 elif operation=='-':
-                    print(f"{user_name_inp.capitalize()}, you chose Subtraction for which you need 2 operands ")
-                    print(user_name_inp.capitalize()+", please enter left hand operand: ")
-                    digit_first = (input())
-                    digit_first_check = float(digit_first)
-                    print(user_name_inp.capitalize()+", please enter right hand operand:")
-                    digit_second = (input(f"{digit_first_check} - "))
-                    digit_second_check = float(digit_second)
-                    if type(digit_first_check)==float and type(digit_second_check)==float:
-                        print(f"Addition: {digit_first_check} - {digit_second_check} = {digit_first_check-digit_second_check} ")
-                    else: 
-                        print("It doesn't look like digits I can work with! Please, input either float (1.0) or integer (1) value! Thank you! ")
+                    while True:
+                        print(f"\n{user_name_inp.capitalize()}, you chose Subtraction for which you need 2 operands ")
+                        digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit ('end'-main menu): ")
+                        if digit_first=='end':
+                            break
+                        else:
+                            digit_second = input(f"{user_name_inp.capitalize()}, input second digit ('end'-main menu): ")
+                            if digit_first.strip("-").replace('.','',1).isdigit() and digit_second.strip("-").replace('.','',1).isdigit():
+                                digit_first = float(digit_first)
+                                digit_second = float(digit_second)
+                                print(f"Subtraction: {digit_first} - {digit_second} = {digit_first-digit_second} ")
+                            else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
+                    continue
                 elif operation=='/':
-                    print(f"{user_name_inp.capitalize()}, you chose Division for which you need 2 operands ")
-                    print(user_name_inp.capitalize()+", please enter left hand operand: ")
-                    digit_first = (input())
-                    digit_first_check = float(digit_first)
-                    print(user_name_inp.capitalize()+", please enter right hand operand:")
-                    digit_second = (input(f"{digit_first_check} / "))
-                    digit_second_check = float(digit_second)
-                    if type(digit_first_check)==float and type(digit_second_check)==float:
-                        print(f"Addition: {digit_first_check} / {digit_second_check} = {digit_first_check/digit_second_check} ")
-                    else: 
-                        print("It doesn't look like digits I can work with! Please, input either float (1.0) or integer (1) value! Thank you! ")
+                    while True:
+                        print(f"\n{user_name_inp.capitalize()}, you chose Division for which you need 2 operands ")
+                        digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit ('end'-main menu): ")
+                        if digit_first=='end':
+                            break
+                        else:
+                            digit_second = input(f"{user_name_inp.capitalize()}, input second digit ('end'-main menu): ")
+                            if digit_first.strip("-").replace('.','',1).isdigit() and digit_second.strip("-").replace('.','',1).isdigit():
+                                digit_first = float(digit_first)
+                                digit_second = float(digit_second)
+                                print(f"Division: {digit_first} / {digit_second} = {digit_first/digit_second} ")
+                            else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
+                    continue
                 elif operation=='*':
-                    print(f"{user_name_inp.capitalize()}, you chose Multiplication for which you need 2 operands ")
-                    print(user_name_inp.capitalize()+", please enter left hand operand: ")
-                    digit_first = (input())
-                    digit_first_check = float(digit_first)
-                    print(user_name_inp.capitalize()+", please enter right hand operand:")
-                    digit_second = (input(f"{digit_first_check} * "))
-                    digit_second_check = float(digit_second)
-                    if type(digit_first_check)==float and type(digit_second_check)==float:
-                        print(f"Addition: {digit_first_check} * {digit_second_check} = {digit_first_check*digit_second_check} ")
-                    else: 
-                        print("It doesn't look like digits I can work with! Please, input either float (1.0) or integer (1) value! Thank you! ")
+                    while True:
+                        print(f"\n{user_name_inp.capitalize()}, you chose Multiplication for which you need 2 operands ")
+                        digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit ('end'-main menu): ")
+                        if digit_first=='end':
+                            break
+                        else:
+                            digit_second = input(f"{user_name_inp.capitalize()}, input second digit ('end'-main menu): ")
+                            if digit_first.strip("-").replace('.','',1).isdigit() and digit_second.strip("-").replace('.','',1).isdigit():
+                                digit_first = float(digit_first)
+                                digit_second = float(digit_second)
+                                print(f"Multiplication: {digit_first} * {digit_second} = {digit_first*digit_second} ")
+                            else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
+                    continue
                 elif operation=='//':
-                    print(f"{user_name_inp.capitalize()}, you chose Floor Division for which you need 2 operands ")
-                    print(user_name_inp.capitalize()+", please enter left hand operand: ")
-                    digit_first = (input())
-                    digit_first_check = float(digit_first)
-                    print(user_name_inp.capitalize()+", please enter right hand operand:")
-                    digit_second = (input(f"{digit_first_check} // "))
-                    digit_second_check = float(digit_second)
-                    if type(digit_first_check)==float and type(digit_second_check)==float:
-                        print(f"Addition: {digit_first_check} // {digit_second_check} = {digit_first_check//digit_second_check} ")
-                    else: 
-                        print("It doesn't look like digits I can work with! Please, input either float (1.0) or integer (1) value! Thank you! ")
+                    while True:
+                        print(f"\n{user_name_inp.capitalize()}, you chose Floor Division for which you need 2 operands ")
+                        digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit ('end'-main menu): ")
+                        if digit_first=='end':
+                            break
+                        else:
+                            digit_second = input(f"{user_name_inp.capitalize()}, input second digit ('end'-main menu): ")
+                            if digit_first.strip("-").replace('.','',1).isdigit() and digit_second.strip("-").replace('.','',1).isdigit():
+                                digit_first = float(digit_first)
+                                digit_second = float(digit_second)
+                                print(f"Floor Division: {digit_first} // {digit_second} = {digit_first//digit_second} ")
+                            else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
+                    continue
                 elif operation=='%':
-                    print(user_name_inp.capitalize()+", please enter right hand operand: ")
-                    digit_second = float(input())
-                    print(f"Modulus: {digit_first} % {digit_second} = {digit_first%digit_second} ")
+                    while True:
+                        print(f"\n{user_name_inp.capitalize()}, you chose Modulus for which you need 2 operands ")
+                        digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit ('end'-main menu): ")
+                        if digit_first=='end':
+                            break
+                        else:
+                            digit_second = input(f"{user_name_inp.capitalize()}, input second digit ('end'-main menu): ")
+                            if digit_first.strip("-").replace('.','',1).isdigit() and digit_second.strip("-").replace('.','',1).isdigit():
+                                digit_first = float(digit_first)
+                                digit_second = float(digit_second)
+                                print(f"Modulus: {digit_first} % {digit_second} = {digit_first%digit_second} ")
+                            else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
+                    continue
                 elif operation=='**':
-                    print(user_name_inp.capitalize()+", please enter right hand operand: ")
-                    digit_second = float(input())
-                    print(f"Exponent: {digit_first} ** {digit_second} = {digit_first**digit_second} ")
+                    while True:
+                        print(f"\n{user_name_inp.capitalize()}, you chose Exponent for which you need 2 operands ")
+                        digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit/body ('end'-main menu): ")
+                        if digit_first=='end':
+                            break
+                        else:
+                            digit_second = input(f"{user_name_inp.capitalize()}, input second digit/power ('end'-main menu): ")
+                            if digit_first.strip("-").replace('.','',1).isdigit() and digit_second.strip("-").replace('.','',1).isdigit():
+                                digit_first = float(digit_first)
+                                digit_second = float(digit_second)
+                                print(f"Exponent: {digit_first} ** {digit_second} = {digit_first**digit_second} ")
+                            else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
+                    continue
                 elif operation=='*s':
-                    print(f"{user_name_inp.capitalize()}+ Perfect square of {digit_first} = {digit_first*digit_first}")
+                    while True:
+                        print(f"\n{user_name_inp.capitalize()}, you chose Perfect Square ")
+                        digit_first = input(f"\n{user_name_inp.capitalize()}, input digit ('end'-main menu): ")
+                        if digit_first=='end':
+                            break
+                        else:
+                            if digit_first.strip("-").replace('.','',1).isdigit():
+                                digit_first = float(digit_first)
+                                print(f"Perfect Square of {digit_first} = {digit_first*digit_first} ")
+                            else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
+                    continue
                 print(" Enter '+' for Addition ")
                 print(" Enter '-' for Subtraction ")
                 print(" Enter '/' for Division ")
