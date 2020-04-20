@@ -1,4 +1,4 @@
-print("Welcome to calculator!")
+print("\nWelcome to calculator!")
 print("\nEnter 'end' to quit")
 while True:
     user_name_inp=input("Please, enter your name: ")
