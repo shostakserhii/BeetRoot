@@ -158,7 +158,12 @@ while True:
                                 digit_second = float(digit_second)
                                 import random
                                 #print(f"Random number of range from {digit_first} to {digit_second} is: {random(digit_first,digit_second)}")
-                                print("The random is ", random.randrange(digit_first,digit_second))
+                                if digit_first < digit_second:
+                                    print(f"Random num between {digit_first} and {digit_second} is {random.randrange(digit_first,digit_second)}")
+                                elif digit_first==digit_second:
+                                    print("Numbers are equal")
+                                else:
+                                    print(f"Random num between {digit_second} and {digit_first} is {random.randrange(digit_second,digit_first)}")
                             else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
                     continue
                 elif operation=='r':
@@ -190,55 +195,68 @@ exmaple   -->|example:1 + 1 = 2 |     example:4 *p = 16      | example:1.12345 r
              *****************************************************************************************************************
 """)
                         command = input("Enter command: ") 
-                        command != 'end'
-                        command_check = command.split()
-                        #print(command_check)
-                        #print(len(command_check))
-                        if command_check[0].isdigit() and command_check[1].isalnum()==False and command_check[2].isdigit() and len(command_check)==3:
-                            sym=command_check[1]
-                            first_digit=float(command_check[0])
-                            second_digit=float(command_check[2])
-                            if sym == '+':
-                                print(f"Result of Addition {first_digit} + {second_digit} = {first_digit+second_digit}")
-                            elif sym == '-':
-                                print(f"Result of Substraction {first_digit} - {second_digit} = {first_digit-second_digit}")
-                            elif sym == '*':
-                                print(f"Result of Multiplication {first_digit} * {second_digit} = {first_digit*second_digit}")
-                            elif sym == '/':
-                                if second_digit == 0:
-                                    print("You cannot devide by 0. Try different")
+                        if command != 'end':
+                            command_check = command.split()
+                            #print(command_check)
+                            #print(len(command_check))
+                            if command_check[0].lstrip("-").replace('.','',1).isdigit() and command_check[1].isalnum()==False and command_check[2].lstrip("-").replace('.','',1).isdigit() and len(command_check)==3:
+                                sym=command_check[1]
+                                first_digit=float(command_check[0])
+                                second_digit=float(command_check[2])
+                                if sym == '+':
+                                    print(f"Result of Addition {first_digit} + {second_digit} = {first_digit+second_digit}")
+                                elif sym == '-':
+                                    print(f"Result of Substraction {first_digit} - {second_digit} = {first_digit-second_digit}")
+                                elif sym == '*':
+                                    print(f"Result of Multiplication {first_digit} * {second_digit} = {first_digit*second_digit}")
+                                elif sym == '/':
+                                    if second_digit == 0:
+                                        print("You cannot devide by 0. Try different")
+                                    else:
+                                        print(f"Result of Devision {first_digit} / {second_digit} = {first_digit/second_digit}")
+                                elif sym == '//':
+                                    if second_digit == 0:
+                                        print("You cannot devide by 0. Try different")
+                                    else:
+                                        print(f"Result of Devision {first_digit} // {second_digit} = {first_digit//second_digit}")
+                                elif sym == '%':
+                                    if second_digit == 0:
+                                        print("You cannot devide by 0. Try different")
+                                    else:
+                                        print(f"Result of Devision {first_digit} % {second_digit} = {first_digit%second_digit}")
+                                elif sym == '**':
+                                    print(f"Power of {first_digit} to {second_digit} = {first_digit**second_digit}")
+                            elif command_check[0].lstrip("-").replace('.','',1).isdigit() and command_check[1]=='*p' and len(command_check)==2:
+                                sym=command_check[1]
+                                first_digit=float(command_check[0])
+                                print(f"Square power of {first_digit} = {first_digit**first_digit}")
+                            elif command_check[0].lstrip("-").replace('.','',1).isdigit() and command_check[1]=='rnd' and command_check[2].lstrip("-").replace('.','',1).isdigit() and len(command_check)==3:
+                                import random
+                                sym=command_check[1]
+                                first_digit=float(command_check[0])
+                                second_digit=float(command_check[2])
+                                if first_digit < second_digit:
+                                    print(f"Random num between {first_digit} and {second_digit} is {random.randrange(first_digit,second_digit)}")
+                                elif first_digit==second_digit:
+                                    print("Numbers are equal")
                                 else:
-                                    print(f"Result of Devision {first_digit} / {second_digit} = {first_digit/second_digit}")
-                            elif sym == '//':
-                                if second_digit == 0:
-                                    print("You cannot devide by 0. Try different")
+                                    print(f"Random num between {second_digit} and {first_digit} is {random.randrange(second_digit,first_digit)}")
+                            elif command_check[0].isdigit() and command_check[1]=='r' and command_check[2].isdigit() and len(command_check)==3:
+                                if int(second_digit)==False:
+                                    print("Number of decimal places can only be of integer value. Try again")
                                 else:
-                                    print(f"Result of Devision {first_digit} // {second_digit} = {first_digit//second_digit}")
-                            elif sym == '%':
-                                if second_digit == 0:
-                                    print("You cannot devide by 0. Try different")
-                                else:
-                                    print(f"Result of Devision {first_digit} % {second_digit} = {first_digit%second_digit}")
-                            elif sym == '**':
-                                print(f"Power of {first_digit} to {second_digit} = {first_digit**second_digit}")
-                        elif command_check[0].isdigit() and command_check[1]=='*p' and len(command_check)==2:
-                            sym=command_check[1]
-                            first_digit=float(command_check[0])
-                            print(f"Square power of {first_digit} = {first_digit**first_digit}")
-                        elif command_check[0].isdigit() and command_check[1]=='rnd' and command_check[2].isdigit() and len(command_check)==3:
-                            import random
-                            sym=command_check[1]
-                            first_digit=float(command_check[0])
-                            second_digit=float(command_check[2])
-                            print(f"Random num between {first_digit} and {second_digit} is {random.randrange(first_digit,second_digit)}")
-                        else:
-                            print("Your symbol doesn't match available opeartions. Try again")
-                        #elif len(command_check)==2 and command_check[0].isdigit() and command_check[1].isalnum()==False:  
-                        break  
+                                    first_digit=float(command_check[0])
+                                    second_digit=int(command_check[2])
+                                    print(f"Rounding: {first_digit} with {second_digit} decimal places = {round(first_digit,digit_second)} ")
+                            else:
+                                print("Your symbol doesn't match available opeartions. Try again")
+                            #elif len(command_check)==2 and command_check[0].isdigit() and command_check[1].isalnum()==False:  
+                            continue
+                        break
                 else:
-                        print("\nYour input doesn't match available operations ")
+                    print("\nYour input doesn't match available operations")
                 continue
-            print(f"{user_name_inp.capitalize()}, thanks for using our calculator!")
+            print(f"{user_name_inp.capitalize()}, Thank you for using our calculator!")
             break
     else: print("It is not name")
     continue
