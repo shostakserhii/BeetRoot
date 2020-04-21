@@ -14,6 +14,7 @@ while True:
             print(""" 
  __________________________         
 |   OPERATION   |  Symbol  |
+|Subsctraction  |    -     |
 |Addition       |    +     |
 |Division       |    /     | 
 |Multiplication |    *     |
