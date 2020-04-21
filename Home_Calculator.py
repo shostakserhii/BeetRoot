@@ -153,6 +153,22 @@ while True:
                                 print("The random is ", random.randrange(digit_first,digit_second))
                             else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
                     continue
+                elif operation=='r':
+                    while True:
+                        print(f"\n{user_name_inp.capitalize()}, you chose Rounding ")
+                        digit_first = input(f"\n{user_name_inp.capitalize()}, input digit ('end'-main menu): ")
+                        if digit_first=='end':
+                            break
+                        else:
+                            digit_second = input(f"{user_name_inp.capitalize()}, input the integer number of decimal places ('end'-main menu): ")
+                            if int(digit_second) == False:
+                                print("Error. Number of decimal places cannot be of different type than int and not equal to 0! ")
+                            elif digit_first.lstrip("-").replace('.','',1).isdigit() and digit_second.lstrip("-").replace('.','',1).isdigit() and digit_first.count("-")<=1 and digit_second.count("-")<=1:
+                                digit_first = float(digit_first)
+                                digit_second = int(digit_second)
+                                print(f"Rounding: {digit_first} with {digit_second} decimal places = {round(digit_first,digit_second)} ")
+                            else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
+                    continue
                 print(" Enter '+' for Addition ")
                 print(" Enter '-' for Subtraction ")
                 print(" Enter '/' for Division ")
