@@ -261,3 +261,11 @@ exmaple   -->|example:1 + 1 = 2 |     example:4 *p = 16      | example:1.12345 r
             break
     else: print("It is not name")
     continue
+
+
+
+
+#
+#   Enter command: 3 ----- 1
+#   WELCOME TO AUTO MODE
+#
