@@ -42,7 +42,7 @@ while True:
                                 digit_second = float(digit_second)
                                 print(f"Addition: {digit_first} + {digit_second} = {digit_first+digit_second} ")
                             else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
-                    continue
+                            break
                 elif operation=='-':
                     while True:
                         print(f"\n{user_name_inp.capitalize()}, you chose Subtraction for which you need 2 operands ")
@@ -145,7 +145,7 @@ while True:
                                 print(f"Perfect Square of {digit_first} = {digit_first*digit_first} ")
                             else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
                     continue
-                if operation=='rnd':
+                elif operation=='rnd':
                     while True:
                         print(f"\n{user_name_inp.capitalize()}, you chose Randomizer ")
                         digit_first = input(f"\n{user_name_inp.capitalize()}, set the range from ('end'-main menu): ")
@@ -251,7 +251,6 @@ exmaple   -->|example:1 + 1 = 2 |     example:4 *p = 16      | example:1.12345 r
                             else:
                                 print("Your symbol doesn't match available opeartions. Try again")
                             #elif len(command_check)==2 and command_check[0].isdigit() and command_check[1].isalnum()==False:  
-                            continue
                         break
                 else:
                     print("\nYour input doesn't match available operations ")
