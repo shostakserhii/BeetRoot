@@ -7,5 +7,5 @@ while i < 100:
     if i % 7 == 0 and i % 5 :
         listo.append(i)
         i += 1
-    else: i += 1
+    i += 1
 print (listo)
