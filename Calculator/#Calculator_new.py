@@ -206,4 +206,4 @@ while True:
             break    
     elif operation == operations[-1]:
         command = input("Enter command: ")
-        print("The result is  "+str(automode(command)))
+        print(f"The result is  +{automode(command)}")
