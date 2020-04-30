@@ -142,11 +142,12 @@ def command_validation(command):# - це перевірка комнади в *�
     #for some reason I cannot make partition function to work - it awlays gives me 'str' object has no attribute 'partition'
     if left.lstrip("-").replace('.','',1).isdigit() and right.lstrip("-").replace('.','',1).isdigit() and symbol in operations: #перевіряю чи тапл відповідає вимогам
         for c in operations_auto.keys():#лупаю ключі і розділяю фразу за left|operation|right щоб переконатись що декілька операцій теж могли ранитись
-            left, right = command.split(c)
-            left = float(left)
-            right = float(right)
-            return operations_auto[c](left,right)
-    return None          
+            if symbol == c:
+                left, right = command.split(c)
+                left = float(left)
+                right = float(right)
+                return operations_auto[c](left,right)
+    return None
 ####################################################################################
 
 
