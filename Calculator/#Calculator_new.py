@@ -21,7 +21,7 @@ menu_operations = {
 'end':" to finish working with calculator",
 'auto':" to enter automode"
 }
-operations = ["+", "-", "/", "*", "//", "%", "**", "r", "rnd", "end", "auto"]
+operations = ("+", "-", "/", "*", "//", "%", "**", "r", "rnd", "end", "auto")
 def name_check(name):
     while True:
         name = input("Please, enter your name: ")
@@ -57,7 +57,7 @@ def division(x,y):
         return print("You cannot divide by zero")
     elif first is None or second is None:
         return None
-    return first / second    
+    return first / second
 def multiplication(x,y):
     first = convertation(x)
     second = convertation(y)
@@ -71,7 +71,11 @@ def floor_division(x,y):
         return print("You cannot divide by zero")
     elif first is None or second is None:
         return None
-    return first // second    
+    return first // second
+def floor_division_auto(x,y):
+    if y == 0:
+        return print("You cannot devide by 0")
+    return x // y  
 def modulus(x,y):
     first = convertation(x)
     second = convertation(y)
@@ -79,7 +83,11 @@ def modulus(x,y):
         return print("You cannot divide by zero")
     elif first is None or second is None:
         return None
-    return first % second    
+    return first % second
+def modulus_auto(x,y):
+    if y == 0:
+        return print("You cannot modulo by 0")
+    return x % y  
 def exponent(x,y):
     first = convertation(x)
     second = convertation(y)
@@ -92,6 +100,10 @@ def rounding(x,y):
     if first != None and second == int(second):
         return round(first,int(second))
     return None
+def rounding_auto(x,y):
+    if y != int(y):
+        return print("Number of decimal places should be integer")
+    return round(x,int(y))
 def randoming(x,y):
     first = convertation(x)
     second = convertation(y)
@@ -101,23 +113,40 @@ def randoming(x,y):
         return random.randrange(second, first)
     elif first < second:
         return random.randrange(first, second)
+def randoming_auto(first,second):
+    if first > second:
+        return random.randrange(second, first)
+    elif first < second:
+        return random.randrange(first, second)
 ############################## AUTOMODE FUNCTION ##################################
 operations_auto = {
 '+':add,
 '-':sub,
 '/':truediv,
 '*':mul,
-'rnd':randoming,
-'r':rounding
+'%':modulus_auto,
+'rnd':randoming_auto,
+'r':rounding_auto,
+'**':pow,
+'//':floor_division_auto
 }
-def automode(value):
-    if value.strip("-").replace('.','',1).isdigit():
+'''def automode(value):
+    if value.strip('-').replace('.','').isdigit():
         return float(value)
     for symbol in operations_auto.keys():
-        left, symbol, right = value.split()
+        left, symbol, right = value.partition(symbol)
         if symbol in operations_auto:
-            return operations_auto[symbol](automode(left), automode(right))
-
+            return operations_auto[symbol](left,right)'''
+def command_validation(command):# - це перевірка комнади в *автомоді*
+    left, symbol, right = command.split() # here I am making split cause 
+    #for some reason I cannot make partition function to work - it awlays gives me 'str' object has no attribute 'partition'
+    if left.lstrip("-").replace('.','',1).isdigit() and right.lstrip("-").replace('.','',1).isdigit() and symbol in operations: #перевіряю чи тапл відповідає вимогам
+        for c in operations_auto.keys():#лупаю ключі і розділяю фразу за left|operation|right щоб переконатись що декілька операцій теж могли ранитись
+            left, right = command.split(c)
+            left = float(left)
+            right = float(right)
+            return operations_auto[c](left,right)
+    return None          
 ####################################################################################
 
 
@@ -205,5 +234,9 @@ while True:
             else: print(f"The result of rounding = {result} ") 
             break    
     elif operation == operations[-1]:
-        command = input("Enter command: ")
-        print(f"The result is  +{automode(command)}")
+        while True:
+            command = input("Enter command: ")
+            if str(command_validation(command)) == None:
+                print("Wrong input")
+            print("The result = " +str(command_validation(command)))
+            break
