@@ -25,9 +25,16 @@ def name_check(name):
         if name.isalpha():
             return name.capitalize()
         else:
-            #print('If that is your real name I don\'t envy you! \nBut if you want I can call you R2D2 ')
-            continue
-
+            print('\nIf that is your real name I don\'t envy you! \nBut if you want I can call you R2D2 ')
+            x = input("\nCall R2D2 - 1; or press 2 to try again: ")
+            if x == '1':
+                return "R2D2"
+            elif x == '2':
+                continue
+            else: 
+                print('\nYou are definitely robot so I will call you R2D2')
+                return "R2D2"
+        continue
 def validate(value):
     if value.lstrip("-").replace('.','',1).isdigit() and value.count("-")<=1:
         return True
