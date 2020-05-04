@@ -274,7 +274,7 @@ while True:
             print(f"""
                                 {name}, you entered AutoMode*
 
-*Arithmetic:whole command
+*Arithmetic:whole command 1+1, 2*2, 3/3, 4//4, 5**5...
 
 **Random number: 'rnd' for random number or '1 rnd 100' for range
 
