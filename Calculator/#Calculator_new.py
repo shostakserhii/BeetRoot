@@ -2,41 +2,41 @@
 import random
 import collections
 from operator import pow, truediv, mul, add, sub 
-#menu_operations = OrderedDict()
 first_digit = None
 second_digit = None
 name = str
-operator = ''
 menu_operations = {
-'+':"for Addition ",
-'-':"for Substraction ",
-'/':"for Division ",
-'*':"for Multiplication ",
-'//':"for Floor Division ",
-'%':"for Modulus ",
-'**':"for Exponent ",
-'r':"for Rounding ",
-'rnd':"for Randomizer ",
-'Example: ': "enter '+' to proceed with addition",
-'end':" to finish working with calculator",
-'auto':" to enter automode"
+'"+"':"for addition",
+'"-"':"for substraction",
+'"/"':"for division",
+'"*"':"for multiplication",
+'"//"':"for floor division",
+'"%"':"for modulus",
+'"**"':"for exponent",
+'"r"':"for rounding",
+'"rnd"':"for randomizer",
+'"end"':"to finish working with calculator",
+'"am"':"to enter automode"
 }
 operations = ("+", "-", "/", "*", "//", "%", "**", "r", "rnd", "end", "auto")
 def name_check(name):
     while True:
-        name = input("Please, enter your name: ")
+        name = input("\nPlease, enter your name: ")
         if name.isalpha():
             return name.capitalize()
         else:
-            print('Wrong input')
+            #print('If that is your real name I don\'t envy you! \nBut if you want I can call you R2D2 ')
             continue
+
 def validate(value):
     if value.lstrip("-").replace('.','',1).isdigit() and value.count("-")<=1:
         return True
 def convertation(value):
     if validate(value) == True:
-        value = float(value)
-        return value
+        if value == int(value):
+            return int(value)
+        value == float(value)
+        return float(value)
     return None
 def additing(x,y):
     first = convertation(x)
@@ -58,6 +58,12 @@ def division(x,y):
     elif first is None or second is None:
         return None
     return first / second
+def division_auto (x,y):
+    if y == 0:
+        return print("You cannot divide by zero")
+    if y is None or x is None:
+        return None
+    return x / y
 def multiplication(x,y):
     first = convertation(x)
     second = convertation(y)
@@ -122,7 +128,7 @@ def randoming_auto(first,second):
 operations_auto = {
 '+':add,
 '-':sub,
-'/':truediv,
+'/':division_auto,
 '*':mul,
 '%':modulus_auto,
 'rnd':randoming_auto,
@@ -130,37 +136,59 @@ operations_auto = {
 '**':pow,
 '//':floor_division_auto
 }
-'''def automode(value):
-    if value.strip('-').replace('.','').isdigit():
-        return float(value)
-    for symbol in operations_auto.keys():
-        left, symbol, right = value.partition(symbol)
-        if symbol in operations_auto:
-            return operations_auto[symbol](left,right)'''
-def command_validation(command):# - це перевірка комнади в *автомоді*
-    left, symbol, right = command.split() # here I am making split cause 
-    #for some reason I cannot make partition function to work - it awlays gives me 'str' object has no attribute 'partition'
-    if left.lstrip("-").replace('.','',1).isdigit() and right.lstrip("-").replace('.','',1).isdigit() and symbol in operations: #перевіряю чи тапл відповідає вимогам
-        for c in operations_auto.keys():#лупаю ключі і розділяю фразу за left|operation|right щоб переконатись що декілька операцій теж могли ранитись
-            if symbol == c:
-                left, right = command.split(c)
+def command_validation(command):
+    operation = get_operation(command)
+    if operation is None:
+        return None   
+    left, symbol, right = command.partition(operation)
+    if validation_num(left) and validation_num(right): 
+        for symbol in operations_auto.keys():
+            if operation == symbol: 
+                if operation == "/" or operation == '//' or operation =='%':
+                    if right == 0:
+                        return print(f"Sorry, {name}, but you cannot divide by 0")
+                    else:
+                        left = float(left)
+                        right = float(right)
+                        return operations_auto[symbol](left,right)
                 left = float(left)
                 right = float(right)
-                return operations_auto[c](left,right)
+ #               if operations_auto[symbol](left,right).isinstance():
+ #                   return int(operations_auto[symbol](left,right))
+                return operations_auto[symbol](left,right) 
+    return None
+def validation_num(num):
+    return num.strip().lstrip("-").strip().replace('.','',1).isdigit()
+def get_operation(command):
+    for operation in operations:
+        if operation == '//' and operation in command:
+            return operation
+        elif operation == '**' and operation in command:
+            return operation
+        elif operation == 'rnd' and operation in command:
+            return operation
+    for operation in operations: 
+        if operation in command.lstrip('-'):
+            return operation
     return None
 ####################################################################################
-
-
-print (""" Hello, calculator welcomes you! """)
+print ("HELLO, PyCULATOR WELCOMES YOU!".center(53))
 name = name_check(name)
-print(f"\nNice to meet you, {name}! Welcome to main menu")
+print(f"\nNice to meet you, {name}! ")
 while True:
-    for k, v in menu_operations.items():
-        print(k,v)
-    operation = input("Enter symbol: ")
+    delimiter = '+' + '-' * 53 + '+'
+    print("MAIN MENU".center(53))
+    print(delimiter)
+    for index, item in menu_operations.items():
+        index_length = abs(len(index) - 8)
+        line_length = abs((10 + len(index) + index_length + len(item)) - len(delimiter))
+        print('| Enter: ' + index + ' '*index_length + item + ' '* line_length + '|')
+    print(delimiter)
+    operation = input("\nEnter symbol to choose operation: ")
     if operation not in operations:
         print("Wrong input, try again")
     elif operation == "end":
+        print("\nThank you for using PyCulator")
         break
     elif operation == operations[0]:
         while True:
@@ -183,7 +211,7 @@ while True:
             result = division(input("Enter first digit: "), input("Enter second digit: "))
             if result is None or result == "You cannot divide by zero":
                 print("Try again since you entered wrong elements which cannot be divided")
-                continue
+                break
             else: print(f"The result of division = {result} ") 
             break
     elif operation == operations[3]:
@@ -236,8 +264,21 @@ while True:
             break    
     elif operation == operations[-1]:
         while True:
-            command = input("Enter command: ")
-            if str(command_validation(command)) == None:
-                print("Wrong input")
+            print(f"""
+                                {name}, you entered AutoMode*
+
+*Arithmetic:whole command
+
+**Random number: 'rnd' for random number or '1 rnd 100' for range
+
+***Rounding: separate number and number of decimal places you need with 'r' sign - 0.1234 r 2
+""")
+            command = input("Enter full command: ")
+            if command_validation(command) is None:
+                print("Wrong input") 
+                break
+            elif command_validation(command).is_integer():
+                print("The result = " +str(int(command_validation(command))))
+                break
             print("The result = " +str(command_validation(command)))
             break

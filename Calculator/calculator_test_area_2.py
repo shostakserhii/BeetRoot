@@ -1,263 +1,284 @@
+#Calculator
 import random
-operations = ('+','-','/','*','//','%','**','*s','r','rnd','end')
-print("""
+import collections
+from operator import pow, truediv, mul, add, sub 
+first_digit = None
+second_digit = None
+name = str
+menu_operations = {
+'"+"':"for addition",
+'"-"':"for substraction",
+'"/"':"for division",
+'"*"':"for multiplication",
+'"//"':"for floor division",
+'"%"':"for modulus",
+'"**"':"for exponent",
+'"r"':"for rounding",
+'"rnd"':"for randomizer",
+'"end"':"to finish working with calculator",
+'"am"':"to enter automode"
+}
+operations = ("+", "-", "/", "*", "//", "%", "**", "r", "rnd", "end", "auto")
+def name_check(name):
+    while True:
+        name = input("\nPlease, enter your name: ")
+        if name.isalpha():
+            return name.capitalize()
+        else:
+            #print('If that is your real name I don\'t envy you! \nBut if you want I can call you R2D2 ')
+            continue
 
-                       WELCOME TO CALCUTATOR!  
+def validate(value):
+    if value.lstrip("-").replace('.','',1).isdigit() and value.count("-")<=1:
+        return True
+def convertation(value):
+    if validate(value) == True:
+        if value == int(value):
+            return int(value)
+        value == float(value)
+        return float(value)
+    return None
+def additing(x,y):
+    first = convertation(x)
+    second = convertation(y)
+    if first is None or second is None:
+        return None
+    return first + second
+def substraction(x,y):
+    first = convertation(x)
+    second = convertation(y)
+    if first is None or second is None:
+        return None
+    return first - second
+def division(x,y):
+    first = convertation(x)
+    second = convertation(y)
+    if second == 0:
+        return print("You cannot divide by zero")
+    elif first is None or second is None:
+        return None
+    return first / second
+def division_auto (x,y):
+    if y == 0:
+        return print("You cannot divide by zero")
+    if y is None or x is None:
+        return None
+    return x / y
+def multiplication(x,y):
+    first = convertation(x)
+    second = convertation(y)
+    if first is None or second is None:
+        return None
+    return first * second
+def floor_division(x,y):
+    first = convertation(x)
+    second = convertation(y)
+    if second == 0:
+        return print("You cannot divide by zero")
+    elif first is None or second is None:
+        return None
+    return first // second
+def floor_division_auto(x,y):
+    if y == 0:
+        return print("You cannot devide by 0")
+    return x // y  
+def modulus(x,y):
+    first = convertation(x)
+    second = convertation(y)
+    if second == 0:
+        return print("You cannot divide by zero")
+    elif first is None or second is None:
+        return None
+    return first % second
+def modulus_auto(x,y):
+    if y == 0:
+        return print("You cannot modulo by 0")
+    return x % y  
+def exponent(x,y):
+    first = convertation(x)
+    second = convertation(y)
+    if first != None and second == int(second):
+        return first ** second
+    return None
+def rounding(x,y):
+    first = convertation(x)
+    second = convertation(y)
+    if first != None and second == int(second):
+        return round(first,int(second))
+    return None
+def rounding_auto(x,y):
+    if y != int(y):
+        return print("Number of decimal places should be integer")
+    return round(x,int(y))
+def randoming(x,y):
+    first = convertation(x)
+    second = convertation(y)
+    if first is None or second is None:
+        return None
+    elif first > second:
+        return random.randrange(second, first)
+    elif first < second:
+        return random.randrange(first, second)
+def randoming_auto(first,second):
+    if first > second:
+        return random.randrange(second, first)
+    elif first < second:
+        return random.randrange(first, second)
+############################## AUTOMODE FUNCTION ##################################
+operations_auto = {
+'+':add,
+'-':sub,
+'/':division_auto,
+'*':mul,
+'%':modulus_auto,
+'rnd':randoming_auto,
+'r':rounding_auto,
+'**':pow,
+'//':floor_division_auto
+}
+def calc(s):
+    for s in operations_auto.keys():
+        left, operator, right = s.partition(s)
+        if operator in operations_auto:
+            return operations_auto[s](calc(left),calc(right))
 
-
-""")
+'''def command_validation(command):
+    operation = get_operation(command)
+    if operation is None:
+        return None   
+    #if len(command.split(operation))>2 and operation is not "**" or operation is not  "//" or operation is not "rnd":
+    #    print("Please, check your input carefuly and simplify or break it in case it is correct")Wrong input, try again
+    #    return None
+    left, symbol, right = command.partition(operation)
+    if validation_num(left) and validation_num(right): 
+        for symbol in operations_auto.keys():
+            if operation == symbol: 
+                left = float(left)
+                right = float(right)
+                if operations_auto[symbol](left,right) is int:
+                #if operations_auto[symbol](left,right) == int(operations_auto[symbol](left,right)):
+                    return int(operations_auto[symbol](left,right))
+                else: return operations_auto[symbol](left,right)
+    return None
+def validation_num(num):
+    return num.strip().lstrip("-").strip().replace('.','',1).isdigit()
+def get_operation(command):
+    for operation in operations:
+        if operation is '//' and operation in command:
+            return operation
+        elif operation is '**' and operation in command:
+            return operation
+        elif operation is 'rnd' and operation in command:
+            return operation
+    for operation in operations: 
+        if operation in command.lstrip('-'):
+            return operation
+    return None'''
+####################################################################################
+print ("HELLO, PyCULATOR WELCOMES YOU!".center(53))
+name = name_check(name)
+print(f"\nNice to meet you, {name}! ")
 while True:
-    user_name_inp=input("Please, enter your name ('end' to exit): ")
-    if user_name_inp=='end':
-        print("Goodbye! Turtning off...")
+    delimiter = '+' + '-' * 53 + '+'
+    print("MAIN MENU".center(53))
+    print(delimiter)
+    for index, item in menu_operations.items():
+        index_length = abs(len(index) - 8)
+        line_length = abs((10 + len(index) + index_length + len(item)) - len(delimiter))
+        print('| Enter: ' + index + ' '*index_length + item + ' '* line_length + '|')
+    print(delimiter)
+    operation = input("\nEnter symbol to choose operation: ")
+    if operation not in operations:
+        print("Wrong input, try again")
+    elif operation == "end":
+        print("\nThank you for using PyCulator")
         break
-    elif user_name_inp.isalpha():
+    elif operation == operations[0]:
         while True:
-            print(""" 
- __________________________         
-|   OPERATION   |  Symbol  |
-|Addition       |    +     |
-|Division       |    /     | 
-|Multiplication |    *     |
-|Floor Division |    //    |
-|Modulus        |    %     |
-|Exponent       |    **    |
-|Perfect Square |    *s    |
-|Rounding       |    r     |
-|Randomizer     |    rnd   |
-**************************** 
-'auto' to enter automode
-'end' to close application ")
- """)
-            operation = input(f"\n{user_name_inp.capitalize()}, please, choose operation by entering it's sign: ")
-            if operation == 'end':
-                break
-            elif operation=='+':
-                while True:
-                    print(f"\n{user_name_inp.capitalize()}, you chose Addition for which you need 2 operands ")
-                    digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit ('end'-main menu): ")
-                    if digit_first=='end':
-                        break
-                    else:
-                        digit_second = input(f"{user_name_inp.capitalize()}, input second digit ('end'-main menu): ")
-                        if digit_first.lstrip("-").replace('.','',1).isdigit() and digit_second.lstrip("-").replace('.','',1).isdigit() and digit_first.count("-")<=1 and digit_second.count("-")<=1:
-                            digit_first = float(digit_first)
-                            digit_second = float(digit_second)
-                            print(f"Addition: {digit_first} + {digit_second} = {digit_first+digit_second} ")
-                        else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
-                        break
-            elif operation=='-':
-                while True:
-                    print(f"\n{user_name_inp.capitalize()}, you chose Subtraction for which you need 2 operands ")
-                    digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit ('end'-main menu): ")
-                    if digit_first=='end':
-                        break
-                    else:
-                        digit_second = input(f"{user_name_inp.capitalize()}, input second digit ('end'-main menu): ")
-                        if digit_first.lstrip("-").replace('.','',1).isdigit() and digit_second.lstrip("-").replace('.','',1).isdigit() and digit_first.count("-")<=1 and digit_second.count("-")<=1:
-                            digit_first = float(digit_first)
-                            digit_second = float(digit_second)
-                            print(f"Subtraction: {digit_first} - {digit_second} = {digit_first-digit_second} ")
-                        else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
+            result = additing(input("Enter first digit: "), input("Enter second digit: "))
+            if result is None:
+                print("Try again since you entered wrong elements which cannot be added")
                 continue
-            elif operation=='/':
-                while True:
-                    print(f"\n{user_name_inp.capitalize()}, you chose Division for which you need 2 operands ")
-                    digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit ('end'-main menu): ")
-                    if digit_first=='end':
-                        break
-                    else:
-                        digit_second = input(f"{user_name_inp.capitalize()}, input second digit ('end'-main menu): ")
-                        if digit_second==0:
-                            print("\n\tError: you cannot devide by 0, try something else ")
-                        elif digit_first.lstrip("-").replace('.','',1).isdigit() and digit_second.lstrip("-").replace('.','',1).isdigit() and digit_first.count("-")<=1 and digit_second.count("-")<=1:
-                            digit_first = float(digit_first)
-                            digit_second = float(digit_second)
-                            print(f"Division: {digit_first} / {digit_second} = {digit_first/digit_second} ")
-                        else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
-                continue
-            elif operation=='*':
-                while True:
-                    print(f"\n{user_name_inp.capitalize()}, you chose Multiplication for which you need 2 operands ")
-                    digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit ('end'-main menu): ")
-                    if digit_first=='end':
-                        break
-                    else:
-                        digit_second = input(f"{user_name_inp.capitalize()}, input second digit ('end'-main menu): ")
-                        if digit_first.lstrip("-").replace('.','',1).isdigit() and digit_second.lstrip("-").replace('.','',1).isdigit() and digit_first.count("-")<=1 and digit_second.count("-")<=1:
-                            digit_first = float(digit_first)
-                            digit_second = float(digit_second)
-                            print(f"Multiplication: {digit_first} * {digit_second} = {digit_first*digit_second} ")
-                        else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
-                continue
-            elif operation=='//':
-                while True:
-                    print(f"\n{user_name_inp.capitalize()}, you chose Floor Division for which you need 2 operands ")
-                    digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit ('end'-main menu): ")
-                    if digit_first=='end':
-                        break
-                    else:
-                        digit_second = input(f"{user_name_inp.capitalize()}, input second digit ('end'-main menu): ")
-                        if digit_second==0:
-                            print("\n\tError: you cannot devide by 0, try something else ")
-                        elif digit_first.lstrip("-").replace('.','',1).isdigit() and digit_second.lstrip("-").replace('.','',1).isdigit() and digit_first.count("-")<=1 and digit_second.count("-")<=1:
-                            digit_first = float(digit_first)
-                            digit_second = float(digit_second)
-                            print(f"Floor Division: {digit_first} // {digit_second} = {digit_first//digit_second} ")
-                        else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
-                continue
-            elif operation=='%':
-                while True:
-                    print(f"\n{user_name_inp.capitalize()}, you chose Modulus for which you need 2 operands ")
-                    digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit ('end'-main menu): ")
-                    if digit_first=='end':
-                        break
-                    else:
-                        digit_second = input(f"{user_name_inp.capitalize()}, input second digit ('end'-main menu): ")
-                        if digit_second==0:
-                            print("\n\tError: you cannot devide by 0, try something else ")
-                        elif digit_first.lstrip("-").replace('.','',1).isdigit() and digit_second.lstrip("-").replace('.','',1).isdigit() and digit_first.count("-")<=1 and digit_second.count("-")<=1:
-                            digit_first = float(digit_first)
-                            digit_second = float(digit_second)
-                            print(f"Modulus: {digit_first} % {digit_second} = {digit_first%digit_second} ")
-                        else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
-                continue
-            elif operation=='**':
-                while True:
-                    print(f"\n{user_name_inp.capitalize()}, you chose Exponent for which you need 2 operands ")
-                    digit_first = input(f"\n{user_name_inp.capitalize()}, input first digit/body ('end'-main menu): ")
-                    if digit_first=='end':
-                        break
-                    else:
-                        digit_second = input(f"{user_name_inp.capitalize()}, input second digit/power ('end'-main menu): ")
-                        if digit_first.lstrip("-").replace('.','',1).isdigit() and digit_second.lstrip("-").replace('.','',1).isdigit() and digit_first.count("-")<=1 and digit_second.count("-")<=1:
-                            digit_first = float(digit_first)
-                            digit_second = float(digit_second)
-                            print(f"Exponent: {digit_first} ** {digit_second} = {digit_first**digit_second} ")
-                        else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
-                continue
-            elif operation=='*s':
-                while True:
-                    print(f"\n{user_name_inp.capitalize()}, you chose Perfect Square ")
-                    digit_first = input(f"\n{user_name_inp.capitalize()}, input digit ('end'-main menu): ")
-                    if digit_first=='end':
-                        break
-                    else:
-                        if digit_first.strip("-").replace('.','',1).isdigit():
-                            digit_first = float(digit_first)
-                            print(f"Perfect Square of {digit_first} = {digit_first*digit_first} ")
-                        else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
-                continue
-            elif operation=='rnd':
-                while True:
-                    print(f"\n{user_name_inp.capitalize()}, you chose Randomizer ")
-                    digit_first = input(f"\n{user_name_inp.capitalize()}, set the range from ('end'-main menu): ")
-                    if digit_first=='end':
-                        break
-                    else:
-                        digit_second = input(f"{user_name_inp.capitalize()}, input the end of the range ('end'-main menu): ")
-                        if digit_first.lstrip("-").replace('.','',1).isdigit() and digit_second.lstrip("-").replace('.','',1).isdigit() and digit_first.count("-")<=1 and digit_second.count("-")<=1:
-                            digit_first = float(digit_first)
-                            digit_second = float(digit_second)
-                            #print(f"Random number of range from {digit_first} to {digit_second} is: {random(digit_first,digit_second)}")
-                            if digit_first < digit_second:
-                                print(f"Random num between {digit_first} and {digit_second} is {random.randrange(digit_first,digit_second)}")
-                            elif digit_first==digit_second:
-                                print("Numbers are equal")
-                            else:
-                                print(f"Random num between {digit_second} and {digit_first} is {random.randrange(digit_second,digit_first)}")
-                        else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
-                continue
-            elif operation=='r':
-                while True:
-                    print(f"\n{user_name_inp.capitalize()}, you chose Rounding ")
-                    digit_first = input(f"\n{user_name_inp.capitalize()}, input digit ('end'-main menu): ")
-                    if digit_first=='end':
-                        break
-                    else:
-                        digit_second = input(f"{user_name_inp.capitalize()}, input the integer number of decimal places ('end'-main menu): ")
-                        if int(digit_second) == False:
-                            print("Error. Number of decimal places cannot be of different type than int and not equal to 0! ")
-                        elif digit_first.lstrip("-").replace('.','',1).isdigit() and digit_second.lstrip("-").replace('.','',1).isdigit() and digit_first.count("-")<=1 and digit_second.count("-")<=1:
-                            digit_first = float(digit_first)
-                            digit_second = int(digit_second)
-                            print(f"Rounding: {digit_first} with {digit_second} decimal places = {round(digit_first,digit_second)} ")
-                        else: print("\nWrong value! Please, input either float (e.g. 1.1) or integer (e.g. 1) value! Thank you! ")
-                continue
-            elif operation == "auto":
-                while True:
-                    print("""                          WELCOME TO AUTO MODE
-                                                    Enter command you like with the spaces 
-
-                                                      example:digit_operation_digit
-              _______________________________________________________________________________________________________________
-operation -->|   Operations:    | Perfect square of x: x_*p  | Rounding x by y               | Random: from x to y           | 
-more info -->|     +-/*%**//    |                            | y is number of decimal places | x,y set range                 | 
-exmaple   -->|example:1 + 1 = 2 |     example:4 *p = 16      | example:1.12345 r 3 = 1.123   | example:0 rnd 100 = random num| 
-             *****************************************************************************************************************
-""")
-#operations = ('+','-','/','*','//','%','**','*s','r','rnd','end')
-                    command = input("Enter command: ") 
-#                    if str(operations) in command == False:
-#                       print("Your symbol doesn't match available opeartions. Try again")
-#                        continue
-                        #print(command_check)
-                        #print(len(command_check))
-                    for command in operations:
-                        if command == operations[0]:
-#                        command_check=command.split()
- #                       if command_check in operations:
-                            print("Success")
-                    else: print("check your input")
-#                        sym=command_check[1]
-#                        first_digit=float(command_check[0])
-#                        second_digit=float(command_check[2])
-#                        if sym == '+':
-#                            print(f"Result of Addition {first_digit} + {second_digit} = {first_digit+second_digit}")
-#                        elif sym == '-':
-#                            print(f"Result of Substraction {first_digit} - {second_digit} = {first_digit-second_digit}")
-#                        elif sym == '*':
-#                            print(f"Result of Multiplication {first_digit} * {second_digit} = {first_digit*second_digit}")
-#                        elif sym == '/':
-#                            if second_digit == 0:
-#                                print("You cannot devide by 0. Try different")
-#                            else:
-#                                print(f"Result of Devision {first_digit} / {second_digit} = {first_digit/second_digit}")
-#                        elif sym == '//':
-#                            if second_digit == 0:
-#                                print("You cannot devide by 0. Try different")
-#                            else:
-#                                print(f"Result of Devision {first_digit} // {second_digit} = {first_digit//second_digit}")
-#                        elif sym == '%':
-#                            if second_digit == 0:
-#                                print("You cannot devide by 0. Try different")
-#                            else:
-#                                print(f"Result of Devision {first_digit} % {second_digit} = {first_digit%second_digit}")
-#                        elif sym == '**':
-#                            print(f"Power of {first_digit} to {second_digit} = {first_digit**second_digit}")
-#                    elif command_check[0].lstrip("-").replace('.','',1).isdigit() and command_check[1]=='*p' and len(command_check)==2:
-#                        first_digit=float(command_check[0])
-#                        print(f"Square power of {first_digit} = {first_digit**first_digit}")
-#                    elif command_check[0].lstrip("-").replace('.','',1).isdigit() and command_check[1]=='rnd' and command_check[2].lstrip("-").replace('.','',1).isdigit() and len(command_check)==3:
-#                        sym=command_check[1]
-#                        first_digit=float(command_check[0])
-#                        second_digit=float(command_check[2])
-#                        if first_digit < second_digit:
-#                            print(f"Random num between {first_digit} and {second_digit} is {random.randrange(first_digit,second_digit)}")
-#                        elif first_digit==second_digit:
-#                            print("Numbers are equal")
-#                        else:
-#                            print(f"Random num between {second_digit} and {first_digit} is {random.randrange(second_digit,first_digit)}")
-#                    elif command_check[0].isdigit() and command_check[1]=='r' and command_check[2].isdigit() and len(command_check)==3:
-#                        if int(second_digit)==False:
-#                            print("Number of decimal places can only be of integer value. Try again")
-#                        else:
-#                            first_digit=float(command_check[0])
-#                            second_digit=int(command_check[2])
-#                            print(f"Rounding: {first_digit} with {second_digit} decimal places = {round(first_digit,digit_second)} ")
-#                    #elif len(command_check)==2 and command_check[0].isdigit() and command_check[1].isalnum()==False:  
-#                break
-            print(f"{user_name_inp.capitalize()}, Thank you for using our calculator!")
+            else: print(f"The result of addition = {result} ") 
             break
-    else: print("It is not name")
-    continue
+    elif operation == operations[1]:
+        while True:
+            result = substraction(input("Enter first digit: "), input("Enter second digit: "))
+            if result is None:
+                print("Try again since you entered wrong elements which cannot be subsctracted")
+                continue
+            else: print(f"The result of addition = {result} ") 
+            break
+    elif operation == operations[2]:
+        while True:
+            result = division(input("Enter first digit: "), input("Enter second digit: "))
+            if result is None or result == "You cannot divide by zero":
+                print("Try again since you entered wrong elements which cannot be divided")
+                break
+            else: print(f"The result of division = {result} ") 
+            break
+    elif operation == operations[3]:
+        while True:
+            result = multiplication(input("Enter first digit: "), input("Enter second digit: "))
+            if result is None:
+                print("Try again since you entered wrong elements which cannot be multiplied")
+                continue
+            else: print(f"The result of multiplication = {result} ") 
+            break
+    elif operation == operations[4]:
+        while True:
+            result = floor_division(input("Enter first digit: "), input("Enter second digit: "))
+            if result is None or result == "You cannot divide by zero":
+                print("Try again since you entered wrong elements which cannot be floor divided")
+                continue
+            else: print(f"The result of floor division = {result} ") 
+            break
+    elif operation == operations[5]:
+        while True:
+            result = modulus(input("Enter first digit: "), input("Enter second digit: "))
+            if result is None or result == "You cannot divide by zero":
+                print("Try again since you entered wrong elements")
+                continue
+            else: print(f"The result of modulus = {result} ") 
+            break
+    elif operation == operations[6]:
+        while True:
+            result = exponent(input("Enter digit: "), input("Enter power: "))
+            if result is None:
+                print("Try again since you entered wrong elements")
+                continue
+            else: print(f"The result of exponent = {result} ") 
+            break
+    elif operation == operations[7]:
+        while True:
+            result = rounding(input("Enter digit: "), input("Enter the integer number of decimal places: "))
+            if result is None:
+                print("Try again since you entered wrong elements.")
+                continue
+            else: print(f"The result of rounding = {result} ") 
+            break
+    elif operation == operations[8]:
+        while True:
+            result = randoming(input("Set the beginning or range "), input("Enter the end of range "))
+            if result is None:
+                print("Try again since you entered wrong elements.")
+                continue
+            else: print(f"The result of rounding = {result} ") 
+            break    
+    elif operation == operations[-1]:
+        while True:
+            print(f"""
+                                {name}, you entered AutoMode*
+
+*Arithmetic:whole command
+
+**Random number: 'rnd' for random number or '1 rnd 100' for range
+
+***Rounding: separate number and number of decimal places you need with 'r' sign - 0.1234 r 2
+""")
+            command = input("Enter full command: ")
+            if calc(command) is None:
+                print("Wrong input") 
+                break
+            else: print("The result = " +str(calc(command)))
+            break
