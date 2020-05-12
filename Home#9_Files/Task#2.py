@@ -36,6 +36,10 @@ try:
 except json.decoder.JSONDecodeError:
     phonebook = []
 json_file.close()
+
+##################################################
+#           VALIDATIONS                          #
+##################################################
 def validation_num(phone):
     if phone.isdigit():
         return phone
@@ -51,6 +55,10 @@ dict_json = {
 'phone':'',
 'city':''
 }
+####################################################
+#               BODY FUNCTIONS                     #
+####################################################
+
 def user_add_new():
     first_name = input("Please, enter first name: ").capitalize()
     second_name = input("Please, enter second name: ").capitalize()
@@ -100,6 +108,11 @@ def update(phone):
             item['second name'] = input(f"Current first name is {item['second name']}. Enter name you want it to be changed to:")
             item['full name'] = item['first_name'].capitalize() + " " + item['second_name'].capitalize()
             item['city'] = input(f"Current first name is {item['city']}. Enter name you want it to be changed to:")
+
+##############################################
+#                     MAIN BODY              #
+##############################################
+
 try:
     while True:
         choice = input("""
