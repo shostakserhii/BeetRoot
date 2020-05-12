@@ -41,7 +41,7 @@ def validation_num(phone):
         return phone
     print('Incorrect input. Try again')
 def validation_name(name):
-    if name..isalpha():
+    if name.isalpha():
         return name
     print('Incorrect input. Try again')
 dict_json = {
