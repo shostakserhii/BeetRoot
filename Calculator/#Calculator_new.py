@@ -12,11 +12,11 @@ menu_operations = {
 '"*"':"for multiplication",
 '"//"':"for floor division",
 '"%"':"for modulus",
-'"**"':"for exponent",
+'"**"':"for power",
 '"r"':"for rounding",
 '"rnd"':"for randomizer",
 '"end"':"to finish working with calculator",
-'"am"':"to enter automode"
+'"auto"':"to enter automode"
 }
 operations = ("+", "-", "/", "*", "//", "%", "**", "r", "rnd", "end", "auto")
 def name_check(name):
@@ -101,7 +101,7 @@ def modulus_auto(x,y):
     if y == 0:
         return print("You cannot modulo by 0")
     return x % y  
-def exponent(x,y):
+def power(x,y):
     first = convertation(x)
     second = convertation(y)
     if first != None and second == int(second):
@@ -149,7 +149,7 @@ def command_validation(command):
         return None   
     left, symbol, right = command.partition(operation)
     if validation_num(left) and validation_num(right): 
-        for symbol in operations_auto.keys():
+        for symbol in operations_auto:
             if operation == symbol: 
                 if operation == "/" or operation == '//' or operation =='%':
                     if right == 0:
@@ -168,14 +168,9 @@ def validation_num(num):
     return num.strip().lstrip("-").strip().replace('.','',1).isdigit()
 def get_operation(command):
     for operation in operations:
-        if operation == '//' and operation in command:
-            return operation
-        elif operation == '**' and operation in command:
-            return operation
-        elif operation == 'rnd' and operation in command:
-            return operation
-    for operation in operations: 
-        if operation in command.lstrip('-'):
+        if operation == '//' or operation == '**' or operation == 'rnd':
+                return operation
+        elif operation in command.lstrip('-'):
             return operation
     return None
 ####################################################################################
@@ -197,7 +192,7 @@ while True:
     elif operation == "end":
         print("\nThank you for using PyCulator")
         break
-    elif operation == operations[0]:
+    elif operation == "+":
         while True:
             result = additing(input("Enter first digit: "), input("Enter second digit: "))
             if result is None:
@@ -205,7 +200,7 @@ while True:
                 continue
             else: print(f"The result of addition = {result} ") 
             break
-    elif operation == operations[1]:
+    elif operation == "-":
         while True:
             result = substraction(input("Enter first digit: "), input("Enter second digit: "))
             if result is None:
@@ -213,7 +208,7 @@ while True:
                 continue
             else: print(f"The result of addition = {result} ") 
             break
-    elif operation == operations[2]:
+    elif operation == "/":
         while True:
             result = division(input("Enter first digit: "), input("Enter second digit: "))
             if result is None or result == "You cannot divide by zero":
@@ -221,7 +216,7 @@ while True:
                 break
             else: print(f"The result of division = {result} ") 
             break
-    elif operation == operations[3]:
+    elif operation == "*":
         while True:
             result = multiplication(input("Enter first digit: "), input("Enter second digit: "))
             if result is None:
@@ -229,7 +224,7 @@ while True:
                 continue
             else: print(f"The result of multiplication = {result} ") 
             break
-    elif operation == operations[4]:
+    elif operation == "//":
         while True:
             result = floor_division(input("Enter first digit: "), input("Enter second digit: "))
             if result is None or result == "You cannot divide by zero":
@@ -237,7 +232,7 @@ while True:
                 continue
             else: print(f"The result of floor division = {result} ") 
             break
-    elif operation == operations[5]:
+    elif operation == "%":
         while True:
             result = modulus(input("Enter first digit: "), input("Enter second digit: "))
             if result is None or result == "You cannot divide by zero":
@@ -245,15 +240,15 @@ while True:
                 continue
             else: print(f"The result of modulus = {result} ") 
             break
-    elif operation == operations[6]:
+    elif operation == "**":
         while True:
-            result = exponent(input("Enter digit: "), input("Enter power: "))
+            result = power(input("Enter digit: "), input("Enter power: "))
             if result is None:
                 print("Try again since you entered wrong elements")
                 continue
-            else: print(f"The result of exponent = {result} ") 
+            else: print(f"The result of power = {result} ") 
             break
-    elif operation == operations[7]:
+    elif operation == "r":
         while True:
             result = rounding(input("Enter digit: "), input("Enter the integer number of decimal places: "))
             if result is None:
@@ -261,7 +256,7 @@ while True:
                 continue
             else: print(f"The result of rounding = {result} ") 
             break
-    elif operation == operations[8]:
+    elif operation == "rnd":
         while True:
             result = randoming(input("Set the beginning or range "), input("Enter the end of range "))
             if result is None:
@@ -269,7 +264,7 @@ while True:
                 continue
             else: print(f"The result of rounding = {result} ") 
             break    
-    elif operation == operations[-1]:
+    elif operation == "auto":
         while True:
             print(f"""
                                 {name}, you entered AutoMode*
@@ -281,11 +276,12 @@ while True:
 ***Rounding: separate number and number of decimal places you need with 'r' sign - 0.1234 r 2
 """)
             command = input("Enter full command: ")
-            if command_validation(command) is None:
+            validated = command_validation(command)
+            if validated is None:
                 print("Wrong input") 
                 break
-            elif command_validation(command).is_integer():
-                print("The result = " +str(int(command_validation(command))))
+            elif validated.is_integer():
+                print("The result = " +str(int(validated)))
                 break
-            print("The result = " +str(command_validation(command)))
+            print("The result = " +str(validated))
             break
