@@ -98,7 +98,7 @@ def search_second():
     if i == 0:
         print("No results")
 def search_full():
-    full_name = input("Please, enter full name you want to find: ").capitalize()
+    full_name = input("Please, enter full name you want to find: ")
     i=0
     for item in phonebook:
         if item['full name']==full_name:
