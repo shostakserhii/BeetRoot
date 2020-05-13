@@ -5,5 +5,19 @@
         "full name": "Aaa Aaa",
         "phone": "aa",
         "city": "aa"
+    },
+    {
+        "first name": "Serhii",
+        "second name": "Shostak",
+        "full name": "Serhii Shostak",
+        "phone": "0969771671",
+        "city": "Rivne"
+    },
+    {
+        "first name": "Ivanna",
+        "second name": "Shostak",
+        "full name": "Ivanna Shostak",
+        "phone": "0678396961",
+        "city": "Rivne"
     }
 ]
