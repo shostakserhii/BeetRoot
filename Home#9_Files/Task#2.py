@@ -1,3 +1,6 @@
+import json
+import sys
+
 """
 Acceptance Criteria
 1. File present, if file doesn't exists - raise an error 
@@ -29,8 +32,12 @@ Algorithm:
 8. if user selected search/delete record:
    1. ...
 """
-import json
-json_file= open("json_buffer")
+print(sys.argv)
+if len(sys.argv) < 2:
+    print('Please specify json file name')
+    quit()
+filename = sys.argv[1]
+json_file = open(filename)
 try:
     phonebook = json.load(json_file)
 except json.decoder.JSONDecodeError:
@@ -207,8 +214,8 @@ try:
         else:
             print("Incorrect input")
             continue
-except ValueError as e:
+except Exception as e:
     print(f"Error occured: {e}, but data is saved." )
 finally:
-    with open("json_buffer","w") as json_file:
+    with open(filename,"w") as json_file:
         json.dump(phonebook,json_file,indent=4)
