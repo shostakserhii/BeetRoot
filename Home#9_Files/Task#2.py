@@ -51,6 +51,8 @@ def validation_num(phone):
     if phone.isdigit():
         return phone
     print('Incorrect input. Try again')
+
+
 def validation_name(name):
     if name.isalpha():
         return name
@@ -79,6 +81,8 @@ def user_add_new():
     new_add['phone'] = phone_num
     new_add['city'] = city
     phonebook.append(new_add)
+
+
 def search_first():
     first_name = validation_name(input("Please, enter first name you want to find: ").capitalize())
     i=0
@@ -90,9 +94,13 @@ def search_first():
             what_to_do(item)
     if i == 0:
         print("No results")
+
+
 def k_v(item):
     for keys,values in item.items():
         print(f"{keys}: {values}")
+
+
 def search_second():
     second_name = validation_name(input("Please, enter second name you want to find: ").capitalize())
     i=0
@@ -104,6 +112,8 @@ def search_second():
             what_to_do(item)
     if i == 0:
         print("No results")
+
+
 def search_full():
     full_name = input("Please, enter full name you want to find: ").capitalize()
     i=0
@@ -115,11 +125,15 @@ def search_full():
             what_to_do(item)
     if i == 0:
         print("No results found")
+
+
 def search_tel():
     phone_num = validation_num(input("Please, enter phone number you want to find user of: "))
     for item in phonebook:
         if item['phone']==phone_num:
             print(item)
+
+
 def search_city():
     city = input("Please, enter full name you want to find: ").capitalize()
     i=0
@@ -139,6 +153,8 @@ def delete(phone):
     for item in phonebook:
         if item['phone']==phone:
             phonebook.remove(item)
+
+
 def update(phone):
     for item in phonebook:
         if item['phone']==phone:
@@ -146,6 +162,8 @@ def update(phone):
             item['second name'] = input(f"Current first name is {item['second name']}. Enter name you want it to be changed to:")
             item['full name'] = item['first name'].capitalize() + " " + item['second name'].capitalize()
             item['city'] = input(f"Current first name is {item['city']}. Enter name you want it to be changed to:")
+
+            
 def what_to_do(item):
     choice = input("""What do you want to do with abonent:
                     d - delete
