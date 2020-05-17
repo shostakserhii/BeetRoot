@@ -1,0 +1,37 @@
+[
+    {
+        "first_name": "a",
+        "second_name": "a",
+        "phone": "aa",
+        "city": "1",
+        "full_name": "a a"
+    },
+    {
+        "first_name": "1",
+        "second_name": "2",
+        "phone": "12",
+        "city": "3",
+        "full_name": "1 2"
+    },
+    {
+        "first_name": "Ser",
+        "second_name": "Sho",
+        "phone": "034",
+        "city": "Rv",
+        "full_name": "Ser Sho"
+    },
+    {
+        "first_name": "\u0428\u043c",
+        "second_name": "\u043e\u0444",
+        "phone": "\u0432\u0444\u0446",
+        "city": "\u0446\u0432",
+        "full_name": "\u0428\u043c \u043e\u0444"
+    },
+    {
+        "first_name": "shos",
+        "second_name": "ad",
+        "phone": "adad",
+        "city": "awd",
+        "full_name": "shos ad"
+    }
+]
