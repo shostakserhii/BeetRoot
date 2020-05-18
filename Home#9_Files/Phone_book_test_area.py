@@ -50,13 +50,6 @@ dict_json = {
 'city':''
 }
 
-search ={
-'first name':first_name,
-'second name':second_name,
-'full name':full_name,
-'phone':phone,
-'city':city
-}
 ####################################################
 #               BODY FUNCTIONS                     #
 ####################################################
@@ -81,14 +74,14 @@ def k_v(item):
         print(f"{keys}: {values}")
 
 
-def search(key, value):
-    value = validation((input(f"Enter {str(key)} you want to find")),value)
+def search(operation):
+    value = validation((input(f"Enter {str(operation)} you want to find")),operation)
     if value is None:
         return print("wrong input") 
     else:
         i = 0
         for item in phonebook:
-            if item[key] == value:
+            if item[operation] == value:
                 i+=1
                 print(f"\nAbonent #{i}\n")
                 k_v(item)
@@ -162,15 +155,15 @@ try:
             """)
             choice = input("Choose operation: ")
             if choice.strip().lower() == "f":
-                search('first name', first_name)
+                search('first name')
             elif choice.strip().lower() == "s":
-                search('second name', second_name)
+                search('second name')
             elif choice.strip().lower() == "n":
-                search('full name', full_name)
+                search('full name')
             elif choice.strip().lower() == "t":
-                search('phone', phone)
+                search('phone')
             elif choice.strip().lower() == "c":
-                search("city",city)
+                search("city")
             else:
                 print("Not available operation")
         elif choice.strip().lower() == "d":
