@@ -81,7 +81,7 @@ def k_v(item):
         print(f"{keys}: {values}")
 
 
-def search(key,value):
+def search(key, value):
     value = validation((input(f"Enter {str(key)} you want to find")),value)
     if value is None:
         return print("wrong input") 
