@@ -1,0 +1,51 @@
+[
+    {
+        "first name": "Aaa",
+        "second name": "Aaa",
+        "full name": "Aaa Aaa",
+        "phone": "aa",
+        "city": "aa"
+    },
+    {
+        "first name": "Serhii",
+        "second name": "Shostak",
+        "full name": "Serhii Shostak",
+        "phone": "0969771671",
+        "city": "Rivne"
+    },
+    {
+        "first name": "Ivanna",
+        "second name": "Shostak",
+        "full name": "Ivanna Shostak",
+        "phone": "0678396961",
+        "city": "Rivne"
+    },
+    {
+        "first name": "S",
+        "second name": "S",
+        "full name": "S S",
+        "phone": "34",
+        "city": "RV"
+    },
+    {
+        "first name": "S",
+        "second name": "S",
+        "full name": "S S",
+        "phone": "1",
+        "city": "s"
+    },
+    {
+        "first name": "S",
+        "second name": "S",
+        "full name": "S S",
+        "phone": "1",
+        "city": "s"
+    },
+    {
+        "first name": "Sophia",
+        "second name": "Shostak",
+        "full name": "Sophia Shostak",
+        "phone": "0969771671",
+        "city": "Rivne"
+    }
+]

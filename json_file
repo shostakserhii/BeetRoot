@@ -1,24 +1,10 @@
 [
     {
-        "first_name": "a",
-        "second_name": "a",
-        "phone": "aa",
-        "city": "1",
-        "full_name": "a a"
-    },
-    {
-        "first_name": "1",
-        "second_name": "2",
+        "first_name": "Serhii",
+        "second_name": "Shostak",
         "phone": "12",
-        "city": "3",
-        "full_name": "1 2"
-    },
-    {
-        "first_name": "Ser",
-        "second_name": "Sho",
-        "phone": "034",
-        "city": "Rv",
-        "full_name": "Ser Sho"
+        "city": "Rivne",
+        "full_name": "Serhii Shostak"
     },
     {
         "first_name": "\u0428\u043c",

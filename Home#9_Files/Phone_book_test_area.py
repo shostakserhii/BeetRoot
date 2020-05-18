@@ -1,36 +1,7 @@
-"""
-Acceptance Criteria
-1. File present, if file doesn't exists - raise an error 
-2. Application works with json read and save
-3. Promt user with options:
-   a. Add entry
-   b. Find entry:
-        Search by first name 
-        Search by last name 
-        Search by full name
-        Search by telephone number
-        Search by city or state
-   c. Delete entry by phonenumber
-   d. Update entry by phonenumber
-   e. Exit app
-4. Save phone book into json file after exit
-5. Read existing phonebook from json file
-The first argument to the application should be the name of the phonebook.
-Algorithm:
-1. open file
-2. raise an error if file doesn't exist
-3. read json
-4. if during reading error appears ignore and create empty list
-5. try except finally on global level to save file anyway
-6. Print menu
-7. if user selected add new record:
-   1. Ask user put data
-   2. Append data to list
-8. if user selected search/delete record:
-   1. ...
-"""
 import json
-json_file= open("json_buffer")
+import sys
+
+json_file = open('json_buffer')
 try:
     phonebook = json.load(json_file)
 except json.decoder.JSONDecodeError:
@@ -44,16 +15,47 @@ def validation_num(phone):
     if phone.isdigit():
         return phone
     print('Incorrect input. Try again')
+
+
 def validation_name(name):
     if name.isalpha():
         return name
     print('Incorrect input. Try again')
+
+def validation(inputing, category):
+    if category == 'phone':
+        if inputing.isdigit():
+            return inputing
+        return None
+    elif category is first_name or category is second_name or category is full_name or category is city: 
+        if inputing.isalpha():
+            return inputing
+    print('Incorrect input. Try again')
+    return None
+
+##################################################
+#           VARIABLES                            #
+##################################################
+first_name = 'first name'
+second_name = 'second name'
+full_name = 'full name'
+phone = 'phone'
+city= 'city'
+
 dict_json = {
 'first name':'',
 'second name':'',
 'full name':'',
 'phone':'',
 'city':''
+}
+
+search ={
+'first name':first_name,
+'second name':second_name,
+'full name':full_name,
+'phone':phone,
+'city':city
 }
 ####################################################
 #               BODY FUNCTIONS                     #
@@ -70,60 +72,29 @@ def user_add_new():
     new_add['second name'] = second_name.capitalize()
     new_add['full name'] = full_name
     new_add['phone'] = phone_num
-    new_add['city'] = city
+    new_add['city'] = city.capitalize()
     phonebook.append(new_add)
-def search_first():
-    first_name = validation_name(input("Please, enter first name you want to find: ").capitalize())
-    i=0
-    for item in phonebook:
-        if item['first name']==first_name:
-            i+=1
-            print(f"\nAbonent #{i}\n")
-            k_v(item)
-            what_to_do(item)
-    if i == 0:
-        print("No results")
+
+
 def k_v(item):
     for keys,values in item.items():
         print(f"{keys}: {values}")
-def search_second():
-    second_name = validation_name(input("Please, enter second name you want to find: ").capitalize())
-    i=0
-    for item in phonebook:
-        if item['second name']==second_name:
-            i+=1
-            print(f"\nAbonent #{i}\n")
-            k_v(item)
-            what_to_do(item)
-    if i == 0:
-        print("No results")
-def search_full():
-    full_name = input("Please, enter full name you want to find: ")
-    i=0
-    for item in phonebook:
-        if item['full name']==full_name:
-            i+=1
-            print(f"\nAbonent #{i}\n")
-            k_v(item)
-            what_to_do(item)
-    if i == 0:
-        print("No results found")
-def search_tel():
-    phone_num = validation_num(input("Please, enter phone number you want to find user of: "))
-    for item in phonebook:
-        if item['phone']==phone_num:
-            print(item)
-def search_city():
-    city = input("Please, enter full name you want to find: ").capitalize()
-    i=0
-    for item in phonebook:
-        if item['city']==city:
-            i+=1
-            print(f"\nAbonent #{i}\n")
-            k_v(item)
-            what_to_do(item)
-    if i == 0:
-        print("No results found")
+
+
+def search(key,value):
+    value = validation((input(f"Enter {str(key)} you want to find")),value)
+    if value is None:
+        return print("wrong input") 
+    else:
+        i = 0
+        for item in phonebook:
+            if item[key] == value:
+                i+=1
+                print(f"\nAbonent #{i}\n")
+                k_v(item)
+                what_to_do(item)
+        if i == 0:
+            return print("No results found")
 
 #############################################################
 #                   WHAT TO DO                              #
@@ -132,6 +103,8 @@ def delete(phone):
     for item in phonebook:
         if item['phone']==phone:
             phonebook.remove(item)
+
+
 def update(phone):
     for item in phonebook:
         if item['phone']==phone:
@@ -139,6 +112,8 @@ def update(phone):
             item['second name'] = input(f"Current first name is {item['second name']}. Enter name you want it to be changed to:")
             item['full name'] = item['first name'].capitalize() + " " + item['second name'].capitalize()
             item['city'] = input(f"Current first name is {item['city']}. Enter name you want it to be changed to:")
+
+            
 def what_to_do(item):
     choice = input("""What do you want to do with abonent:
                     d - delete
@@ -183,19 +158,19 @@ try:
             (s) - search by second name
             (n) - search by full name
             (t) - search by tel num
-            (c) - search by city  
+            (c) - search by city
             """)
             choice = input("Choose operation: ")
             if choice.strip().lower() == "f":
-                search_first()
+                search('first name', first_name)
             elif choice.strip().lower() == "s":
-                search_second()
+                search('second name', second_name)
             elif choice.strip().lower() == "n":
-                search_full()
+                search('full name', full_name)
             elif choice.strip().lower() == "t":
-                search_tel()
+                search('phone', phone)
             elif choice.strip().lower() == "c":
-                search_city()
+                search("city",city)
             else:
                 print("Not available operation")
         elif choice.strip().lower() == "d":
@@ -207,8 +182,9 @@ try:
         else:
             print("Incorrect input")
             continue
-except ValueError as e:
+except Exception as e:
     print(f"Error occured: {e}, but data is saved." )
 finally:
-    with open("json_buffer","w") as json_file:
+    with open('json_buffer',"w") as json_file:
         json.dump(phonebook,json_file,indent=4)
+json_file.close()
