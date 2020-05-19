@@ -19,5 +19,19 @@
         "phone": "adad",
         "city": "awd",
         "full_name": "shos ad"
+    },
+    {
+        "first_name": "Serhii",
+        "second_name": "Shostak",
+        "phone": "0979771671",
+        "city": "Rivne",
+        "full_name": "Serhii Shostak"
+    },
+    {
+        "first_name": "Serhii",
+        "second_name": "Shostak",
+        "phone": "0969771671",
+        "city": "Rivne",
+        "full_name": "Serhii Shostak"
     }
 ]
