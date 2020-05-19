@@ -27,7 +27,7 @@ def validation(inputing, category):
         if inputing.isdigit():
             return inputing
         return None
-    elif category is first_name or category is second_name or category is full_name or category is city: 
+    elif category in validation_listing: 
         if inputing.isalpha():
             return inputing
     print('Incorrect input. Try again')
@@ -41,6 +41,8 @@ second_name = 'second name'
 full_name = 'full name'
 phone = 'phone'
 city= 'city'
+
+validation_listing = [first_name, second_name, city, full_name]
 
 dict_json = {
 'first name':'',
@@ -69,13 +71,13 @@ def user_add_new():
     phonebook.append(new_add)
 
 
-def k_v(item):
+def result_print(item):
     for keys,values in item.items():
         print(f"{keys}: {values}")
 
 
 def search(operation):
-    value = validation((input(f"Enter {str(operation)} you want to find")),operation)
+    value = validation(input(f"Enter {str(operation)} you want to find: "),operation)
     if value is None:
         return print("wrong input") 
     else:
@@ -84,7 +86,7 @@ def search(operation):
             if item[operation] == value:
                 i+=1
                 print(f"\nAbonent #{i}\n")
-                k_v(item)
+                result_print(item)
                 what_to_do(item)
         if i == 0:
             return print("No results found")
@@ -101,10 +103,10 @@ def delete(phone):
 def update(phone):
     for item in phonebook:
         if item['phone']==phone:
-            item['first name'] = input(f"Current first name is {item['first name']}. Enter name you want it to be changed to:")
-            item['second name'] = input(f"Current first name is {item['second name']}. Enter name you want it to be changed to:")
+            item['first name'] = input(f"Current first name is {item['first name']}. Enter name you want it to be changed to:").strip().capitalize()
+            item['second name'] = input(f"Current first name is {item['second name']}. Enter name you want it to be changed to:").strip().capitalize()
             item['full name'] = item['first name'].capitalize() + " " + item['second name'].capitalize()
-            item['city'] = input(f"Current first name is {item['city']}. Enter name you want it to be changed to:")
+            item['city'] = input(f"Current first name is {item['city']}. Enter name you want it to be changed to:").strip().capitalize()
 
             
 def what_to_do(item):
@@ -117,10 +119,10 @@ def what_to_do(item):
         phonebook.remove(item)
         return print("Abonent is erased")
     elif choice == 'u':
-            item['first name'] = input(f"Current first name is {item['first name']}. Enter name you want it to be changed to:")
-            item['second name'] = input(f"Current first name is {item['second name']}. Enter name you want it to be changed to:")
+            item['first name'] = input(f"Current first name is {item['first name']}. Enter name you want it to be changed to:").strip().capitalize()
+            item['second name'] = input(f"Current first name is {item['second name']}. Enter name you want it to be changed to:").strip().capitalize()
             item['full name'] = item['first name'].capitalize() + " " + item['second name'].capitalize()
-            item['city'] = input(f"Current first name is {item['city']}. Enter name you want it to be changed to:")
+            item['city'] = input(f"Current first name is {item['city']}. Enter name you want it to be changed to:").strip().capitalize()
             return print("Updated")
     elif choice == 'c':
         return None
