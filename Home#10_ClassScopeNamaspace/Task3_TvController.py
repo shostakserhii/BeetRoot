@@ -1,7 +1,5 @@
 class TvController():
 
-    channels = ['BBC','Discovery','TV1000']
-
     def __init__(self, channels = ['BBC','Discovery','TV1000'],channel_number = 0):
         self.channels = channels
         self.channel_number = channel_number
@@ -54,7 +52,7 @@ while True:
                 1:  BBC
                 2:  Discovery
                 3:  TV1000
-            You are now watching {TvController.channels} 
+            You are now watching {controller.channels} 
     And next operations:
                 first channel:      -f
                 last channel:       -l
