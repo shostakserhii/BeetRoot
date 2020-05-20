@@ -1,65 +1,60 @@
-channels = ['BBC','Discovery','TV1000']
-current = 0
 class TvController():
 
-    def __init__(self, channels):
+    channels = ['BBC','Discovery','TV1000']
+
+    def __init__(self, channels = ['BBC','Discovery','TV1000'],channel_number = 0):
         self.channels = channels
+        self.channel_number = channel_number
+    
+    def current_channel(self):
+        return self.channels[self.channel_number]
 
     def first_channel(self):
-        global current 
-        current = 0
-        return channels[0]
+        self.channel_number = 0
+        return self.current_channel()
 
     def last_channel(self):
-        global current 
-        current = 2
-        return channels[-1]
+        self.channel_number -= 1
+        return self.current_channel()
 
-    def turn_channel(self,N):
-        global current
-        current = N - 1
-        return channels[N-1]
+    def turn_channel(self,number):
+        if int(number) <= len(self.channels):
+            self.channel_number = int(number)-1
+            return self.current_channel()
+        return "we do not have such channel number. Sorry, bro..."
 
     def next_channel(self):
-        global current
-        if current == 2:
-            current = 0
-            return channels[current] 
-        current += 1
-        return channels[current]
+        if self.channel_number < len(self.channels)-1:
+            self.channel_number +=1
+            return self.current_channel()
+        self.channel_number = 0
+        return self.current_channel()
+        
 
     def previous_channel(self):
-        global current
-        current -= 1
-        return channels[current]
-
-    def current_channel(self):
-        return channels[current]
+        self.channel_number -=1
+        return self.current_channel()
     
     def is_exist(self):
-        N = input("input number or name of the channel: ")
-        if 4> N.isdigit() >0:
-            return "Exists! you can watch it"
-        elif N.isalpha():
-            for item in channels:
-                if N.upper() == item:
-                    return "Exists! you can watch it"
+        check = input("input number or name of the channel: ").strip()
+        if len(self.channels)> check.isdigit()>0:
+            return f"Exists! you can watch {self.channels[int(check)-1]}"
+        elif check.upper().isalpha():
+            for item in self.channels:
+                if check.upper() == item:
+                    return f"Exists! you can watch it {self.channels.index(check.upper())+1}"
         else:
             return "No results, sorry"
 
-controller = TvController(channels)
-print(controller.first_channel())
-print(controller.turn_channel(3))
-print(controller.next_channel())
-print(controller.previous_channel())
+controller = TvController()
 
 while True:
     choice = input(f"""
-    We have 3 channels available:
+    We have 3 self.channels available:
                 1:  BBC
                 2:  Discovery
                 3:  TV1000
-            You are now watching {channels[current]} 
+            You are now watching {TvController.channels} 
     And next operations:
                 first channel:      -f
                 last channel:       -l
@@ -85,7 +80,7 @@ while True:
     elif choice.strip().lower() == 'p':
         print(controller.previous_channel())
     elif choice.strip().lower() == 'c':
-        print(channels[current])
+        print(controller.current_channel())
     elif choice.strip().lower() == 'check':
         print(controller.is_exist())
     else:
