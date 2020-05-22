@@ -1,6 +1,6 @@
 class Mathematician():
 
-    def __init__(self, l=[1, -2, 3, -4], years = [2001, 1884, 1995, 2000, 2003, 2020]):
+    def __init__(self, l= [1, -2, 3, -4], years = [2001, 1884, 1995, 2000, 2003, 2020]):
         self.l=l
         self.years = years
 
