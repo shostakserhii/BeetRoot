@@ -34,7 +34,7 @@ class User():
             'second_name':self.second_name,
             'phone':self.phone,
             'city':self.city,
-            'full_name':self.first_name+" "+self.second_name
+            'full_name':self.first_name+ " " +self.second_name
         }
     
 ##################################################
