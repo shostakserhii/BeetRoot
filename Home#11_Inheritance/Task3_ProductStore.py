@@ -82,7 +82,7 @@ try:
     store.add(fitball,20)
     store.set_discount('Ball', 10, 'name')
     store.set_discount('Sport', 10, 'type')
-    print(store.sell_product('Fitball', 30))
+    print(store.sell_product('Fitball', 10))
     print(store.get_income())
     store.show_products()
     print(store.get_product_info("Ball"))
