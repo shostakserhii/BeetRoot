@@ -86,7 +86,8 @@ try:
     print(store.get_income())
     store.show_products()
     print(store.get_product_info("Ball"))
-except Exception:
-    print("Something went wrong...oops")
+except Exception as e:
+    print(f"Something went wrong...oops. More details here -> {e}")
+    raise ValueError 
 finally: 
     print("Closing app")
