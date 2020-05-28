@@ -87,7 +87,7 @@ try:
     store.show_products()
     print(store.get_product_info("Ball"))
 
-except ValueError as e:
+except Exception as e:
     print(f"Something went wrong...oops. More details here -> {e}")
     raise ValueError 
 finally: 
