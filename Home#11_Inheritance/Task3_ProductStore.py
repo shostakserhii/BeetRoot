@@ -78,7 +78,7 @@ try:
     ball = Product("Sport", "Ball", 100)
     store = ProductStore()
     store.add(ball, 10)
-    fitball = Product("Sport", "Fitball", 10)
+    fitball = Product("Sport", "Fitball", 150)
     store.add(fitball,20)
     store.set_discount('Ball', 10, 'name')
     store.set_discount('Sport', 10, 'type')
