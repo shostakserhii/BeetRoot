@@ -1,10 +1,17 @@
 class Product():
 
     def __init__(self, type, name, price):
-        self.type = type
-        self.name = name
-        self.price = price
-    
+        try:
+            if type.strip().isalpha() and name.strip().isalpha() and price == int(price):
+                self.type = type
+                self.name = name
+                self.price = price
+            else:
+                raise ValueError('Invalid input!')
+        except ValueError as e:
+            print(f"The Value error is: {e}")
+
+
     def __str__(self):
         return f'{self.type, self.name, self.price}'
     
@@ -20,34 +27,26 @@ class ProductStore():
         pass
 
     def add(self, product, amount):
-        self.product = product
-        self.amount = amount
         product.price *= 1.3
-        self.base[product.name] = product,amount    
-        print(self.base)
+        self.base[product.name] = product,amount
 
     def set_discount(self, identifier, percent, identifier_type):
         self.identifier = identifier
         self.percent = percent
         self.identifier_type = identifier_type
-        if identifier_type == 'name':
-            for v in self.base.values():
-                if v[0].name == self.identifier:
-                    v[0].price *= 1-(self.percent/100)
-        if identifier_type == 'type':
-            for v in self.base.values():
-                if v[0].type == self.identifier:
-                    v[0].price *= 1-(self.percent/100)
-        print(self.base)
+        for v in self.base.values():
+            if getattr(v[0], self.identifier_type) == self.identifier:
+                v[0].price *= 1-(self.percent/100)
+
+
 
     def sell_product(self, product_name, amount):
-        self.product_name = product_name
-        self.amount = amount
+        income = 0
         for v in self.base.values():
-            if v[0].name == self.product_name:
-                if v[1]<self.amount:
+            if v[0].name == product_name:
+                if v[1]<amount:
                     return "insufficient ammount, sorry"
-                income = (v[1] - self.amount)*v[0].price
+                income = (v[1] - amount)*v[0].price
         self.profit += income
         return f"Income is: {income}"
 
@@ -74,11 +73,12 @@ class ProductStore():
     def __repr__(self):
         return self.base
 
-ball = Product("Sport", "Ball", 100)
+
 try:
+    ball = Product("Sport", "Ball", 100)
     store = ProductStore()
     store.add(ball, 10)
-    fitball = Product("Sport", "Fitball", 90)
+    fitball = Product("Sport", "Fitball", 10)
     store.add(fitball,20)
     store.set_discount('Ball', 10, 'name')
     store.set_discount('Sport', 10, 'type')
@@ -86,7 +86,8 @@ try:
     print(store.get_income())
     store.show_products()
     print(store.get_product_info("Ball"))
-except Exception as e:
+
+except ValueError as e:
     print(f"Something went wrong...oops. More details here -> {e}")
     raise ValueError 
 finally: 
