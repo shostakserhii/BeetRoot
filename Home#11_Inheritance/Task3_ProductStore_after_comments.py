@@ -13,27 +13,15 @@ class Product():
 
 
 def save_to_ProductStore (obj, amount = 0):
-    try:
         if obj.name.isalpha() != True:
-            raise ValueError 
-    except ValueError as e:
-        print(f"The error: 'Name' should consist of alphabet symbols")
-    try: 
+            raise ValueError("The error: 'Name' should consist of alphabet symbols")
         if obj.type.strip().isalpha() != True:
-            raise ValueError
-    except ValueError as e:
-        print(f"The error: 'Type' should consist of alphabet symbols")
-    try:    
+            raise ValueError("The error: 'Type' should consist of alphabet symbols")
         if isinstance(obj.price, int) != True:
-            raise ValueError 
-    except ValueError as e:
-        print(f"The error: 'Price' should consist of digits")    
-    else:
-        ProductStore.base[obj.name]=obj, amount
+            raise ValueError("The error: 'Price' should consist of digits")    
+        else:
+            ProductStore.base[obj.name]=obj, amount
     
-        
-    
-
 
 class ProductStore():
 
