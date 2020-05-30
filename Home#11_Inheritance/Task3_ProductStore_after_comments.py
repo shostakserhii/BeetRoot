@@ -79,7 +79,7 @@ class ProductStore():
         return self.base
 
 try:
-    cpu = Product("PC", "CPU", "asd")
+    cpu = Product("PC", "CPU", 111)
     save_to_ProductStore(cpu)
     ball = Product("Sport", "Ball", 100)
     store = ProductStore()

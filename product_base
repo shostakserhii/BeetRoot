@@ -1,1 +1,14 @@
-[]
+[
+    {
+        "name": "CPU",
+        "type": "PC",
+        "price": 144.3,
+        "amount": null
+    },
+    {
+        "name": "RAM",
+        "type": "PC",
+        "price": "120",
+        "amount": "3"
+    }
+]
