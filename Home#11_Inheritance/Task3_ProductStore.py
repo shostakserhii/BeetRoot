@@ -91,7 +91,7 @@ json_file.close()
 try:
     while True:
         choice = input(f"""
-
+        \U0001F643
         Operations:
             a - Add product
             d - Set disount
