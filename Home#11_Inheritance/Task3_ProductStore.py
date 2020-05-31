@@ -48,7 +48,7 @@ class ProductStore():
         for item in self.base:
             if item.name == product_name:
                 if item.amount < amount:
-                    raise ValueError("Not sufficient amount available!")
+                    raise ValueError("Not sufficient amount available! ")
                 item.amount -= amount
                 self.income += (item.price * (amount))
                 print(f"{amount}  {product_name} = {item.price * (amount)}")
@@ -58,6 +58,18 @@ class ProductStore():
             Total income = {self.income}
             Profit = {self.income*0.7}
         """
+    
+    def base_show(self):
+        i = 0
+        for product in self.base:
+            i += 1
+            print(f"""Product #{i}
+
+            Type:   {product.type}
+            Name:   {product.name}
+            Price:  {product.price}
+            Amount: {product.amount}
+            """)
 
     def __str__(self):
         return self.base
@@ -79,13 +91,13 @@ json_file.close()
 try:
     while True:
         choice = input(f"""
-        product_base file was successfuly loaded...
 
         Operations:
             a - Add product
             d - Set disount
             s - Sell product amount
             i - Show income
+            b - Show All Products
 
         q - quit
         make your choice    """) 
@@ -121,6 +133,8 @@ try:
             store.sell_product(name, amount)
         if choice.strip().lower() == 'i':
             store.get_income()
+        if choice.strip().lower() == 'b':
+            store.base_show()
         else:
             print("No operation/product found")
         continue
