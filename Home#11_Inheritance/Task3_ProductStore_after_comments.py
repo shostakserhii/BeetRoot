@@ -50,7 +50,7 @@ class ProductStore():
         for v in self.base.values():
             if v[0].name == product_name:
                 if v[1]<amount:
-                    return "insufficient ammount, sorry"
+                    raise ValueError("insufficient ammount, sorry")
                 income = (v[1] - amount)*v[0].price
         self.profit += income
         return f"Income is: {income}"

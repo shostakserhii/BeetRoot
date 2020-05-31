@@ -2,7 +2,7 @@ import json
 
 class Product():
 
-    def __init__(self, name, type,  price, amount = None):
+    def __init__(self, name, type,  price, amount = 0):
                 self.name = name
                 self.type = type
                 self.price = price
@@ -26,7 +26,7 @@ class Product():
 class ProductStore():
 
     base = []
-    profit = 0
+    income = 0
 
     def __init__(self):
         pass
@@ -37,23 +37,26 @@ class ProductStore():
         self.base.append(product)
 
     def set_discount(self, identifier, percent, identifier_type):
-        self.identifier = identifier
-        self.percent = percent
-        self.identifier_type = identifier_type
-        pass
+        for item in self.base:
+            if getattr(item, identifier_type) == identifier:
+                item.price *= 1-(int(percent)/100)
+                print(f"New price of {item.name} is: {item.price}.")
 
     def sell_product(self, product_name, amount):
-        #income = 0
-        pass
+        for item in self.base:
+            if item.name == product_name:
+                if item.amount < amount:
+                    raise ValueError("Not sufficient amount available!")
+                item.amount -= amount
+                self.income += (item.price * (amount))
+                print(f"{amount}  {product_name} = {item.price * (amount)}")
 
     def get_income(self):
-        pass
+        return f"""
+            Total income = {self.income}
+            Profit = {self.income*0.7}
+        """
 
-    def show_products(self):
-        pass
-
-    def get_product_info(self, product_name):
-        pass
     def __str__(self):
         return self.base
 
@@ -69,7 +72,6 @@ try:
 except json.decoder.JSONDecodeError:
     store.base=[]
 json_file.close()
-
 
 
 try:
@@ -89,19 +91,37 @@ try:
             print("Chao")
             break
         if choice.strip().lower() == 'a':
-            name = input("Name: ")
-            type = input("Type: ")
+            name = input("Name: ").strip().lower()
+            if name.isalpha() != True:
+                raise ValueError("Error: 'Name' should consist of alphabet symbols")
+            type = input("Type: ").strip().lower()
+            if type.isalpha() != True:
+                raise ValueError("Error: 'Type' should consist of alphabet symbols")
             price = input("Price: ")
-            amount = input("Amount: ")
+            if isinstance(price, int) != True:
+                raise ValueError("Error: 'Price' should be integer ")    
+            amount = int(input("Amount: "))
+            if isinstance(amount, int) != True:
+                raise ValueError("Error: 'Amount' should be integer ")   
             store.base.append(Product(name,type,price,amount))
         if choice.strip().lower() == 'd':
-            identifier_type = input("Do you want to assign discount to single product or for the type of products? Put type/name: ")
+            identifier_type = input("""To assign discount to single product put:
+                    - name
+            for the type of products put:
+                    - type
+                    """)
             identifier = input("Type title/Product name: ")
-            discount 
-#    cpu = Product("CPU", "PC", 111)
-    
-#    store.add(cpu, 10)
-    print(store.base)
+            discount = input("Size of the discount: ")
+            store.set_discount(identifier, discount, identifier_type)
+        if choice.strip().lower() == 's':
+            name = input("Product name: ")
+            amount = int(input("Amount: "))
+            store.sell_product(name, amount)
+        if choice.strip().lower() == 'i':
+            store.get_income()
+        else:
+            print("No operation found")
+        continue
 
     store.base = [Product.convert(item) for item in store.base]
     print(store.base)

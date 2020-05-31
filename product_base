@@ -1,14 +1,14 @@
 [
     {
-        "name": "CPU",
-        "type": "PC",
-        "price": 144.3,
-        "amount": null
+        "name": "cpu",
+        "type": "pc",
+        "price": 150,
+        "amount": 0
     },
     {
-        "name": "RAM",
-        "type": "PC",
-        "price": "120",
-        "amount": "3"
+        "name": "ram",
+        "type": "pc",
+        "price": 120,
+        "amount": 3
     }
 ]
