@@ -81,20 +81,24 @@ store = ProductStore()
 try:
     json_file = open('product_base')
     product_base = json.load(json_file)
+    print("""
+    Database successfully loaded....\u270c
+    Let's go
+    """)
     for item in product_base:
         store.base.append(Product(**item))
 except json.decoder.JSONDecodeError:
     store.base=[]
 json_file.close()
 
-
 try:
     while True:
         choice = input(f"""
-        \U0001F643
+
         Operations:
-            a - Add product
-            d - Set disount
+
+            a - Add product 
+            d - Set disount 
             s - Sell product amount
             i - Show income
             b - Show All Products
