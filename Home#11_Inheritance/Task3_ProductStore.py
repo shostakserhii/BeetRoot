@@ -94,8 +94,10 @@ try:
             price = input("Price: ")
             amount = input("Amount: ")
             store.base.append(Product(name,type,price,amount))
-        if choice.strip().lower() == 's':
-
+        if choice.strip().lower() == 'd':
+            identifier_type = input("Do you want to assign discount to single product or for the type of products? Put type/name: ")
+            identifier = input("Type title/Product name: ")
+            discount 
 #    cpu = Product("CPU", "PC", 111)
     
 #    store.add(cpu, 10)
