@@ -41,6 +41,8 @@ class ProductStore():
             if getattr(item, identifier_type) == identifier:
                 item.price *= 1-(int(percent)/100)
                 print(f"New price of {item.name} is: {item.price}.")
+        else:
+            return "No product found"
 
     def sell_product(self, product_name, amount):
         for item in self.base:
@@ -109,18 +111,18 @@ try:
                     - name
             for the type of products put:
                     - type
-                    """)
-            identifier = input("Type title/Product name: ")
+                    """).strip().lower()
+            identifier = input("Type title/Product name: ").strip().lower()
             discount = input("Size of the discount: ")
             store.set_discount(identifier, discount, identifier_type)
         if choice.strip().lower() == 's':
-            name = input("Product name: ")
+            name = input("Product name: ").strip().lower()
             amount = int(input("Amount: "))
             store.sell_product(name, amount)
         if choice.strip().lower() == 'i':
             store.get_income()
         else:
-            print("No operation found")
+            print("No operation/product found")
         continue
 
     store.base = [Product.convert(item) for item in store.base]
