@@ -136,13 +136,3 @@ class Admin_User():
 user = Admin_User()
 user.password = 's'
 print(user.password)
-
-
-
-
-current_num = 1
-last num = 0
-
-
-result = num+old_num+pre_old
-num = 
