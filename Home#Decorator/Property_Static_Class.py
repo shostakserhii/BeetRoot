@@ -1,4 +1,5 @@
 class Test:
+
     def __init__(self, var):
         self.__var = var
 
@@ -55,7 +56,7 @@ class Stat_test():
     def class_method(cls,x):
         print("Class method result:")
         return cls(x.lower())
-    
+
     def __str__(self):
         return self
     def __repr__(self):
