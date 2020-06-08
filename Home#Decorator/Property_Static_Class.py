@@ -68,3 +68,26 @@ test = Stat_test.class_method(value)
 
 print(test.x)
 print(test.static_method(test))
+
+
+class Static_division():
+
+    def __init__(self, x):
+        self.x = x
+
+    @staticmethod
+    def division(x, y):
+        if y == 0:
+            raise ValueError("Cannot devide by Zero!")
+        if type(y) is not int and type(y) is not float:
+            raise ValueError(f"{y} doesn't belong to int or float class")
+        if type(x) is not int and type(x) is not float:
+            raise ValueError(f"{x} doesn't belong to int or float class")
+        result = x/y
+        if result.is_integer():
+            return int(x/y)
+        return x/y
+
+x = Static_division(1)
+
+print(x.division(10,2))
