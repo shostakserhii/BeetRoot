@@ -21,24 +21,22 @@ x = in_range(0, -100, -5)
 print(x)
 """
 
-def in_range(start, end, step = 1):
-
+def in_range(start, end = None, step = 1):
+    if end == None:
+        end = start
+        start = 0
     if (start > end and step > 0):
-        return ("start should be < end if step > 0")
+        return []
     if (start < end and step < 0):
-        return ("start should be > end if step < 0")
+        return []
 
     while start != end:
-
-        if (step > 0 and start>end):
-            break
-        if (step < 0 and start<end):
-            break
 
         yield start
 
         start += step
 
 
-x = list(in_range(10, 0, 1))
+x = list(in_range(0, 10 ,1))
 print(x)
+
