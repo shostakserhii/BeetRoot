@@ -70,7 +70,7 @@ def validation_name(name: str) -> bool:
     return name.isalpha()
 
 
-def validation_with_value_return(inputing: str, category: str) -> Optional[str]:
+def validation_with_optional_value_return(inputing: str, category: str) -> Optional[str]:
     if str(category) == 'phone':
         if inputing.isdigit():
             return inputing
@@ -185,7 +185,7 @@ def what_to_do(item: User) -> None:
 
 
 def search(operation: str) -> None:
-    value = validation_with_value_return(input(f"Enter {str(operation)} you want to find: "), operation)
+    value = validation_with_optional_value_return(input(f"Enter {str(operation)} you want to find: "), operation)
     if value is None:
         print("wrong input")
         return None
@@ -200,6 +200,8 @@ def search(operation: str) -> None:
         if i == 0:
             print("No results found")
             return None
+
+            
 ##############################################
 #                     MAIN BODY              #
 ##############################################
