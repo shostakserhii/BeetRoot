@@ -1,5 +1,7 @@
 import os
 import sys
+import typing
+
 
 mypath = []
 structure = os.listdir(os.getcwd())
