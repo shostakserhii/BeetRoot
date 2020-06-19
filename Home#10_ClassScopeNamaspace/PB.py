@@ -1,17 +1,17 @@
 import json
 from os import path
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Any
 
-phonebook: List[str] = []
+phonebook: List[Any] = []
 
 
 class User():
     def __init__(self,
-                first_name: Optional[str] = None,
-                second_name: Optional[str] = None,
-                phone: Optional[str] = None,
-                city: Optional[str] = None,
-                full_name: Optional[str] = None) -> None:
+                first_name: str = '',
+                second_name: str = '',
+                phone: str = '',
+                city: str = '',
+                full_name: str = '') -> None:
 
         self.first_name = first_name
         self.second_name = second_name
@@ -219,10 +219,10 @@ try:
         raise FileNotFoundError("No file in directory. Database is created being empty")
 
 except json.decoder.JSONDecodeError:
-    phonebook: List[str] = []
+    phonebook = []
 
 except FileNotFoundError:
-    phonebook: List[str] = []
+    phonebook = []
 
 json_file.close()
 
