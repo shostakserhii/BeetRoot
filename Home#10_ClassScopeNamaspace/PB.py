@@ -2,7 +2,6 @@ import json
 from os import path
 from typing import Optional, List, Dict, Any
 
-phonebook: List[Any] = []
 
 
 class User():
@@ -44,6 +43,7 @@ class User():
             'full_name': self.first_name + " " + self.second_name
         }
 
+phonebook: List[User] = []
 ##################################################
 #           VARIABLES                            #
 ##################################################
@@ -88,19 +88,19 @@ def validation_with_optional_value_return(inputing: str, category: str) -> Optio
 
 def new_user() -> None:
     try:
-        first_name = input("Enter first name: ").capitalize()
+        first_name: str = input("Enter first name: ").capitalize()
         if validation_name(first_name) is False:
             raise ValueError("Name should be of alphabetic symbols only")
-        second_name = input("Enter second name: ").capitalize()
+        second_name: str = input("Enter second name: ").capitalize()
         if validation_name(second_name) is False:
             raise ValueError("Name should be of alphabetic symbols only")
-        phone = input("Enter phone: ")
+        phone: str = input("Enter phone: ")
         if validation_num(phone) is False:
             raise ValueError("Phone should be of numbers only")
-        city = input("Enter city: ").capitalize()
+        city: str = input("Enter city: ").capitalize()
         if validation_name(city) is False:
             raise ValueError("City should be of alphabetic symbols only")
-        full_name = (first_name + '' + second_name)
+        full_name: str = (first_name + '' + second_name)
         new_user = User(first_name, second_name, phone, city, full_name)
         phonebook.append(new_user)
         print("\n\tNew abonent was added...")
@@ -120,15 +120,15 @@ def update(phone: str) -> None:
     for item in phonebook:
         if item.phone == phone:
             try:
-                new_first_name = input(f"First name is {item.first_name}. Enter name you want it to be changed to: ")
+                new_first_name: str = input(f"First name is {item.first_name}. Enter name you want it to be changed to: ")
                 if validation_name(new_first_name) is False:
                     raise ValueError("Name should be of alphabetic symbols only")
                 
-                new_second_name = input(f"Second name is {item.second_name}. Enter name you want it to be changed to: ")
+                new_second_name: str = input(f"Second name is {item.second_name}. Enter name you want it to be changed to: ")
                 if validation_name(new_second_name) is False:
                     raise ValueError("Name should be of alphabetic symbols only")
 
-                new_city = input(f"City is {item.city}. Enter name you want it to be changed to: ")
+                new_city: str = input(f"City is {item.city}. Enter name you want it to be changed to: ")
                 if validation_name(city) is False:
                     raise ValueError("City should be of alphabetic symbols only")
 
