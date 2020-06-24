@@ -1,5 +1,5 @@
 import unittest
-from PB import User, validation_name, validation_num, validation_listing, validation_with_optional_value_return, delete
+from PB import User, validation_name, validation_num, validation_listing, validation_with_optional_value_return, new_user, delete, phonebook
 
 class TestUser(unittest.TestCase):
     def test_phone_is_int_success(self):
@@ -78,18 +78,18 @@ class Test_validation_with_optional_value_return(unittest.TestCase):
 
 class Test_Body_functions(unittest.TestCase):
     def test_new_user_sucess(self):
-        expected_fname = ("a").capitalize()
-        expected_sname = ("b").capitalize()
+        expected_fname = ("A")
+        expected_sname = ("B")
         expected_phone = "123"
-        expected_city = ("r").capitalize()
+        expected_city = ("R").capitalize()
         expected_full_name = "A B"
 
-        test_user = User(expected_fname,
-                         expected_sname,
-                         expected_phone,
-                         expected_city,
-                         expected_full_name
-                         ) 
+        test_user = new_user(expected_fname,
+                             expected_sname,
+                             expected_phone,
+                             expected_city,
+                             expected_full_name
+                            ) 
 
         self.assertEqual(test_user.first_name, expected_fname)
         self.assertEqual(test_user.second_name, expected_sname)
@@ -97,14 +97,15 @@ class Test_Body_functions(unittest.TestCase):
         self.assertEqual(test_user.city, expected_city)
         self.assertEqual(test_user.full_name, expected_full_name)
 
-    def test_delete(self):
-        
-        testing_user = User('a', 'b', '1', 'r')
-        phonebook = list(testing_user)
-        expected_result = list()
+    def test_delete_success(self):
+        phonebook = []
+        user = User('a', 'b', '1', 'r', 'a b')
+        print(type(user))
+        phonebook.append(user)
+        print(type(phonebook))
+        expected_result = []
         delete('1')
         self.assertEqual(expected_result, phonebook)
-
 
 
 

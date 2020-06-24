@@ -106,12 +106,11 @@ def validation_with_optional_value_return(inputing: str, category: str) -> Optio
 
     except ValueError as er:
         print(er)"""
-def new_user(first_name, second_name, phone, city, full_name) -> None:
+def new_user(first_name, second_name, phone, city, full_name) -> User:
     new_user = User(first_name, second_name, phone, city, full_name)
-    phonebook.append(new_user)
-    print("\n\tNew abonent was added...")
+    return new_user
 
-def new_user_inputs():
+def new_user_input() -> None:
     try:
         first_name: str = input("Enter first name: ").capitalize()
         if validation_name(first_name) is False:
@@ -127,13 +126,15 @@ def new_user_inputs():
             raise ValueError("City should be of alphabetic symbols only")
         full_name: str = (first_name + '' + second_name)
         new_user(first_name, second_name, phone, city, full_name)
+        phonebook.append(new_user)
+        print("\n\tNew abonent was added...")
     except ValueError as er:
         print(er)
 
 
-def delete(phone: str) -> None:
+def delete(phones: str) -> None:
     for item in phonebook:
-        if item.phone == phone:
+        if item.phone == phones:
             print(f"Successfuly removed {item}")
             del item
 
@@ -263,7 +264,7 @@ try:
             print("Thank you for using #NumBook")
             break
         elif choice.strip().lower() == "a":
-            new_user()
+            new_user_input()
         elif choice.strip().lower() == "s":
             print("""You can search:
             (f) - search by first name
