@@ -6,13 +6,13 @@ from PB import User, validation_name, validation_num, validation_listing, valida
 class TestUser(unittest.TestCase):
     def test_phone_is_int_success(self) -> None:
         expected_phone: int = 1231234234
-        test_user = User('A', 'B', expected_phone, 'C', 'D')
+        test_user: User = User('A', 'B', expected_phone, 'C', 'D')
         actual_phone: int = test_user.phone
         self.assertEqual(actual_phone,expected_phone)
 
     def test_str_phone_is_integer_sucess(self) -> None:
         expected_phone: str = "1231234234"
-        test_user = User('A', 'B', expected_phone, 'C', 'D')
+        test_user: User = User('A', 'B', expected_phone, 'C', 'D')
         actual_phone: str = test_user.phone
         self.assertEqual(actual_phone,expected_phone)
 
@@ -45,7 +45,7 @@ class TestUser(unittest.TestCase):
                         'city': expected_city,
                         'full_name': expected_first_name + " " + expected_second_name
                          }
-        test_user = User(expected_first_name,
+        test_user: User = User(expected_first_name,
                          expected_second_name,
                          expected_phone,
                          expected_city)
@@ -101,7 +101,7 @@ class Test_Body_functions(unittest.TestCase):
 
     def test_delete_success(self) -> None:
         phonebook: List[Any] = []
-        user = User('a', 'b', '1', 'r', 'a b')
+        user: User = User('a', 'b', '1', 'r', 'a b')
         phonebook.append(user)
         expected_result: List[Any] = []
         delete('1', phonebook)
