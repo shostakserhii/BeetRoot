@@ -3,7 +3,6 @@ from os import path
 from typing import Optional, List, Dict, Any
 
 
-
 class User():
     def __init__(self,
                 first_name: str = '',
@@ -16,7 +15,7 @@ class User():
         self.second_name = second_name
         self.phone = phone
         self.city = city
-        self.full_name = self.first_name + " " + self.second_name
+        self.full_name = (self.first_name + " " + self.second_name)
 
     def __str__(self) -> str:
         return f"""
@@ -71,7 +70,7 @@ def validation_name(name: str) -> bool:
 
 
 def validation_with_optional_value_return(inputing: str, category: str) -> Optional[str]:
-    if str(category) == 'phone':
+    if category == 'phone':
         if inputing.isdigit():
             return inputing
         return None
@@ -86,7 +85,7 @@ def validation_with_optional_value_return(inputing: str, category: str) -> Optio
 #               BODY FUNCTIONS                     #
 ####################################################
 
-def new_user() -> None:
+"""def new_user() -> None:
     try:
         first_name: str = input("Enter first name: ").capitalize()
         if validation_name(first_name) is False:
@@ -105,6 +104,29 @@ def new_user() -> None:
         phonebook.append(new_user)
         print("\n\tNew abonent was added...")
 
+    except ValueError as er:
+        print(er)"""
+def new_user(first_name, second_name, phone, city, full_name) -> None:
+    new_user = User(first_name, second_name, phone, city, full_name)
+    phonebook.append(new_user)
+    print("\n\tNew abonent was added...")
+
+def new_user_inputs():
+    try:
+        first_name: str = input("Enter first name: ").capitalize()
+        if validation_name(first_name) is False:
+            raise ValueError("Name should be of alphabetic symbols only")
+        second_name: str = input("Enter second name: ").capitalize()
+        if validation_name(second_name) is False:
+            raise ValueError("Name should be of alphabetic symbols only")
+        phone: str = input("Enter phone: ")
+        if validation_num(phone) is False:
+            raise ValueError("Phone should be of numbers only")
+        city: str = input("Enter city: ").capitalize()
+        if validation_name(city) is False:
+            raise ValueError("City should be of alphabetic symbols only")
+        full_name: str = (first_name + '' + second_name)
+        new_user(first_name, second_name, phone, city, full_name)
     except ValueError as er:
         print(er)
 
