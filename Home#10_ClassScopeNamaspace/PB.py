@@ -132,11 +132,13 @@ def new_user_input() -> None:
         print(er)
 
 
-def delete(phones: str) -> None:
-    for item in phonebook:
+def delete(phones: str, value = phonebook) -> None:
+    print(f"value in delete {value}")
+    for item in value:
         if item.phone == phones:
+            print(f"item {item}")
             print(f"Successfuly removed {item}")
-            del item
+            value.remove(item)
 
 
 def update(phone: str) -> None:
@@ -207,7 +209,7 @@ def what_to_do(item: User) -> None:
         return None
 
 
-def search(operation: str) -> None:
+def search(operation: str, phonebook: list = phonebook) -> None:
     value = validation_with_optional_value_return(input(f"Enter {str(operation)} you want to find: "), operation)
     if value is None:
         print("wrong input")
