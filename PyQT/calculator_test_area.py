@@ -28,9 +28,11 @@ class MainWindow(QMainWindow):
         self.second_value = ''
         self.operation = ''
         self.result = ''
+        self.temp1 = ''
         self.temp = ''
-        self.dot = 0
+        self.temp_operation = ''
         self.number_of_minus = 0
+        self.dot = 0
         self.operations = {
                            '+':add,
                            '-':sub,
@@ -175,9 +177,15 @@ class MainWindow(QMainWindow):
 
 
     def change_text(self, text):
-        if self.result != '' and self.operation != '' and self.operation !='-':
+        if self.first_value != '' and self.operation == '':
+            print("IN CHANGING IF")
+            self.first_value = ''
+            self.history.clear()
+            self.temp = ''
+            self.temp1 = ''
             self._clearDisplay()
-            self.result = ''
+            self.display.setText(self.display.text()+text)
+            return
         self.display.setText(self.display.text() + text)
 
     def buttons_processing(self):
@@ -195,8 +203,8 @@ class MainWindow(QMainWindow):
                 btn.clicked.connect(self._ending)
             elif button_name == '-':
                 btn.clicked.connect(self._substracting)
-            elif button_name == '*':
-                btn.clicked.connect(self._multiplication)
+            # elif button_name == '*':
+            #     btn.clicked.connect(self._multiplication)
             elif button_name == '.':
                 btn.clicked.connect(self._dotting)                
 
@@ -221,34 +229,30 @@ class MainWindow(QMainWindow):
     def input_processing(self):
         value = self.displayText()
 
-        if value == '-':
-            return self.change_text('-')
 
         if value == '':
             return True
-
-        if self.temp != '':
-            return
 
         print(f"value is {value}")
         print(f"first_value is {self.first_value}")
         print(f"operation is {self.operation}")
         print(f"second_value is {self.second_value}")
-        if self.first_value != '' and value == '':
-            return
 
         if self.first_value == '':
             self.first_value = value
-            print(f"1st IF first_value is {self.first_value}")
-            self.history.addItem(self.displayText())
+            self.history.addItem(value)
             print(f"1st IF added to hitory self display {self.displayText()}")
-            self.history.addItem(self.operation)
-            print(f"1st IF added to history operation {self.displayText()}")
+            print(f"1st IF added to history operation {self.operation}")
+            print(f"1st IF first_value is {self.first_value}")
+            self.number_of_minus = 0
             self._clearDisplay()
             return
 
-        elif self.first_value != '':
-            if self.second_value == '':
+        # if self.first_value != '' and value == '':
+        #     return
+
+        if self.first_value != '':
+            if self.second_value == '' and self.operation != '':
                 self.second_value = value
                 self.history.addItem(self.displayText())
                 print(f"IF added to hitory self display {self.displayText()}")
@@ -256,16 +260,7 @@ class MainWindow(QMainWindow):
                 print(f"IF first_value is {self.first_value}")
                 print(f"IF oeration is {self.operation}")
                 print(f"IF second_value is {self.second_value}")
-                return
-            elif self.second_value != '':     
-                self.second_value = value
-                self.history.addItem(self.displayText())
-                print(f"ELIF added to hitory self display {self.displayText()}")
-                self._clearDisplay()
-                print(f"ELIF elif second_value is {self.second_value}")
-                print(f"ELIF first_value is {self.first_value}")
-                print(f"ELIF oeration is {self.operation}")
-                print(f"ELIF second_value is {self.second_value}")
+                self.number_of_minus = 0
                 return
 
     def setDisplayText(self, text=''):
@@ -279,17 +274,17 @@ class MainWindow(QMainWindow):
         self.setDisplayText()
 
     def _clearAll(self):
-        self.setDisplayText()
         self.first_value = ''
         self.second_value = ''
-        self.result = ''
-        self.temp = ''
         self.operation = ''
+        self.result = ''
+        self.temp1 = ''
+        self.temp = ''
         self.history.clear()
-
-    def validate(self, value):
-        if value.lstrip("-").replace('.','',1).isdigit() and value.count("-") <= 1:
-            return True
+        self._clearDisplay()
+        self.temp_operation = ''
+        self.number_of_minus = 0
+        self.dot = 0
 
     def _remove(self):
         value = self.displayText()
@@ -303,41 +298,30 @@ class MainWindow(QMainWindow):
     def _ending(self):
         self.input_processing()
 
-        if self.second_value == '' and self.operation != '':
-            print('U are in ending now')
-            print(f"""\nIn Ending 
-                                first value is {self.first_value}
-                                second value is {self.second_value}
-                                result is {self.result}
-                                operation is {self.operation}
-                                self.temp is {self.temp}
-                                """)
+        if self.second_value == '' and self.operation == '':
             for symbol in self.operations:
-                if symbol == self.operation:
-                    self.result = self.operations[self.operation](self.int_or_float(self.result), self.int_or_float(self.temp))
-                    self.setDisplayText(str(self.result))
-                    self.first_value = self.result
-            return
+                if symbol == self.temp_operation:
+                    print("in ending first IF")
+                    self.temp1 = self.first_value
+                    self.first_value = self.operations[self.temp_operation](self.int_or_float(self.first_value), self.int_or_float(self.temp))
+                    self.setDisplayText(str(self.first_value))
+                    self.history.addItem(f"{str(self.temp1)} {self.temp_operation} {str(self.temp)} = {str(self.int_or_float(self.first_value))}")
+                    return
 
         for symbol in self.operations:
             if symbol == self.operation:
                 print(f"first value = {self.first_value}, second value = {self.second_value}")
-                self.result = self.operations[self.operation](self.int_or_float(self.first_value), self.int_or_float(self.second_value))
-
-        self.history.addItem('=')
-        self.history.addItem(str(self.int_or_float(self.result)))
-        print(f"_Ending added to hitory self display {str(self.int_or_float(self.result))}")
-        if self.temp == '':
-            self.temp = self.second_value
-
-        self.first_value = self.result
-        self.second_value = ''
-        # self.result = ''
+                self.temp1 = self.first_value
+                self.first_value = self.operations[self.operation](self.int_or_float(self.first_value), self.int_or_float(self.second_value))
         self.history.clear()
+        self.history.addItem(f"{str(self.temp1)} {self.operation} {str(self.second_value)} = {str(self.int_or_float(self.first_value))}")
+        self.temp = self.second_value
+        self.temp_operation = self.operation
+        self.operation = ''
+        self.second_value = ''
         self.setDisplayText(str(self.first_value))
         print(f"""after ending first value is {self.first_value}
                                 second value is {self.second_value}
-                                result is {self.result}
                                 history is {self.history}
                                 operation is {self.operation}
                                 self.temp is {self.temp}
@@ -346,86 +330,67 @@ class MainWindow(QMainWindow):
 
 
     def _additing(self):
-        self.operation = '+'
-        
-        if self.first_value == '':
-            self.input_processing()
-            return
-        elif self.first_value != '':    
-            if self.input_processing() is True:
-                self.history.addItem(self.operation)
-                print(f"Additing added to hitory self display {self.operation}")
-                return
-            else:
-                print(f"_additintg first value = {self.first_value} \nsecond_value is {self.second_value}")
-                left = self.int_or_float(self.first_value)
-                print(f"_additing left = {left}")
-                right = self.int_or_float(self.second_value)
-                print(f"_additing right = {right}")
-                self.result = left + right
-                self.history.addItem('=')
-                self.history.addItem(str(self.result))
-                self.history.addItem(self.operation)
-                self.first_value = self.result
-                return
-
-    def _substracting(self):
         self.input_processing()
         
         if self.first_value == '':
-            self.setDisplayText('-')
-            self.number_of_minus += 1            
+            return
+        
+        if self.first_value != '' and self.second_value == '':
+            self.operation = '+'
+            self.history.addItem('+')
+            self._clearDisplay()
+            return
+        if self.second_value != '':
+            print(f"_additintg first value = {self.first_value} \nsecond_value is {self.second_value}")
+            self.first_value = self.int_or_float(self.first_value)
+            print(f"_additing left = {self.first_value}")
+            self.second_value = self.int_or_float(self.second_value)
+            print(f"_additing right = {self.second_value}")
+            self.temp = self.second_value
+            self.temp1 = self.first_value
+            self.first_value = self.first_value + self.second_value
+            self.second_value = '' 
             return
 
+    def _substracting(self):
 
-        if self.second_value == '' and self.operation == '-':
-            self.setDisplayText('-')
-            return
-
-        self.operation = '-'
-
-        if self.first_value != '':    
-            if self.input_processing() is True:
-                self.history.addItem(self.operation)
-                print(f"History added in subsctraction 1st IF {self.operation}")
-                return
-            else:
-                print(f"_additintg first value = {self.first_value} \nsecond_value is {self.second_value}")
-                left = self.int_or_float(self.first_value)
-                print(f"_additing left = {left}")
-                right = self.int_or_float(self.second_value)
-                print(f"_additing right = {right}")
-                self.result = left - right
-                self.history.addItem('=')
-                self.history.addItem(str(self.int_or_float(self.result)))
-                self.history.addItem(self.operation)
-                print(f"History added in subsctraction 1st ELSE {self.operation}")
-                self.first_value = self.result
-                return
-
-    def _multiplication(self):
-        self.operation = '*'
+        self.input_processing()
 
         if self.first_value == '':
-            self.input_processing()
-            return
-        elif self.first_value != '':    
-            if self.input_processing() is True:
-                self.history.addItem(self.operation)
-                return
-            else:
-                print(f"_additintg first value = {self.first_value} \nsecond_value is {self.second_value}")
-                left = self.int_or_float(self.first_value)
-                print(f"_additing left = {left}")
-                right = self.int_or_float(self.second_value)
-                print(f"_additing right = {right}")
-                self.result = left * right
-                self.history.addItem('=')
-                self.history.addItem(str(self.int_or_float(self.result)))
-                self.history.addItem(self.operation)
-                self.first_value = self.result
-                return
+            self.number_of_minus += 1
+            self.setDisplayText('-')
 
+        if self.first_value != '' and self.operation == '':
+            self.operation = '-'
+            self._clearDisplay()
+            self.history.addItem('-')
+            self.number_of_minus = 0
+            return
+
+        if self.operation != '' and self.number_of_minus == 0:
+            self.number_of_minus += 1
+            self.setDisplayText('-')
+            return
+
+        if self.first_value != '':    
+            self.history.addItem(self.operation)
+            print(f"History added in subsctraction 1st IF {self.operation}")
+            self.number_of_minus = 0
+            return
+
+        if self.first_value !='' and self.second_value !='':
+            print(f"_additintg first value = {self.first_value} \nsecond_value is {self.second_value}")
+            left = self.int_or_float(self.first_value)
+            print(f"_additing left = {left}")
+            right = self.int_or_float(self.second_value)
+            print(f"_additing right = {right}")
+            self.temp1 = self.first_value
+            self.first_value = left - right
+            self.history.addItem('=')
+            self.history.addItem(str(self.int_or_float(self.first_value)))
+            self.history.addItem(self.operation)
+            print(f"History added in subsctraction 1st ELSE {self.operation}")
+            return
 
 def main_window():
     app = QApplication(sys.argv)
