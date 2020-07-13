@@ -329,8 +329,10 @@ class MainWindow(QMainWindow):
         print(f"_Ending added to hitory self display {str(self.int_or_float(self.result))}")
         if self.temp == '':
             self.temp = self.second_value
+
         self.first_value = self.result
         self.second_value = ''
+        # self.result = ''
         self.history.clear()
         self.setDisplayText(str(self.first_value))
         print(f"""after ending first value is {self.first_value}
@@ -341,7 +343,7 @@ class MainWindow(QMainWindow):
                                 self.temp is {self.temp}
 
         """)
-        self.first_value = ''
+
 
     def _additing(self):
         self.operation = '+'
@@ -369,7 +371,6 @@ class MainWindow(QMainWindow):
 
     def _substracting(self):
         self.input_processing()
-        value = self.displayText()
         
         if self.first_value == '':
             self.setDisplayText('-')
