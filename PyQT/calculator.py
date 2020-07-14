@@ -4,6 +4,7 @@ from functools import partial
 from operator import truediv, mul, add, sub
 from PyQt5.QtGui import QFont, QColor
 from PyQt5.QtCore import Qt
+from typing import Dict, List, Union, Optional, NoReturn, Json
 
 from PyQt5.QtWidgets import (QApplication, 
                              QWidget,
@@ -27,15 +28,14 @@ class MainWindow(QMainWindow):
         super().__init__(*args, **kwargs)
         self.setWindowTitle("Pyculator")
         self.setGeometry(100, 100, 280, 80)
-        self.first_value = ''
-        self.second_value = ''
-        self.operation = ''
-        self.result = ''
-        self.temp1 = ''
-        self.temp = ''
-        self.temp_operation = ''
-        self.number_of_minus = 0
-        self.dot = 0
+        self.first_value: str = ''
+        self.second_value: str = ''
+        self.operation: str = ''
+        self.temp1: str = ''
+        self.temp: str = ''
+        self.temp_operation: str = ''
+        self.number_of_minus: int = 0
+        self.dot: int = 0
         self.operations = {
                            '+':add,
                            '-':sub,
@@ -56,17 +56,17 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.widget)
         self.buttons_processing()
 
-    def _createDisplay(self):
+    def _createDisplay(self) -> NoReturn:
         self.display = QLineEdit('')
         self.display.setFixedHeight(35)
         self.display.setAlignment(Qt.AlignRight)
         self.display.setReadOnly(True)
         self.mainSubLayout.addWidget(self.display)
 
-    def _createButtons(self):
-        self.buttons = {}
+    def _createButtons(self) -> NoReturn:
+        self.buttons: set = {}
         self.buttonLayout = QGridLayout()
-        buttons = [
+        buttons: Json = [
             {
                 'name':'C',
                 'row':0,
@@ -166,14 +166,14 @@ class MainWindow(QMainWindow):
         ]
 
         for buttonConfig in buttons:
-            name = buttonConfig.get('name','')
+            name: str = buttonConfig.get('name','')
             btn = QPushButton(name)
             font = QFont()
             font.setBold(True)
             btn.setFont(font)
             btn.setSizePolicy(QSizePolicy.Preferred, 
                               QSizePolicy.Expanding)
-            self.buttons[name] = btn
+            self.buttons[name]: set = btn
             self.buttonLayout.addWidget(btn,
                                    buttonConfig['row'],
                                    buttonConfig['col'],
@@ -181,7 +181,7 @@ class MainWindow(QMainWindow):
                                    buttonConfig.get('colSpan',1))
 
 
-    def change_text(self, text):
+    def change_text(self, text) -> NoReturn:
         if self.first_value != '' and self.operation == '':
             self.first_value = ''
             self.history.clear()
@@ -192,7 +192,7 @@ class MainWindow(QMainWindow):
             return
         self.display.setText(self.display.text() + text)
 
-    def buttons_processing(self):
+    def buttons_processing(self) -> NoReturn:
         for button_name in self.buttons:
             btn = self.buttons[button_name]
             if button_name in {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}:
@@ -216,25 +216,20 @@ class MainWindow(QMainWindow):
             elif button_name == '.':
                 btn.clicked.connect(self._dotting)                
 
-    def _dotting(self):
+    def _dotting(self) -> NoReturn:
         value = self.displayText()
         if '.' in value:
             return
         else:
             self.display.setText(self.display.text() + ".")
 
-    def int_or_float(self, num):
-        try:
+    def int_or_float(self, num) -> Union[int, float]:
             num = float(num)
             if num.is_integer():
                 return int(num)
             return num
-        except ValueError:
-            self._clearAll()
-            self.history.addItem("ERROR")
-            return
 
-    def input_processing(self):
+    def input_processing(self) -> Optional[bool]:
         value = self.displayText()
 
         if value == '':
@@ -255,17 +250,17 @@ class MainWindow(QMainWindow):
                 self.number_of_minus = 0
                 return
 
-    def setDisplayText(self, text=''):
+    def setDisplayText(self, text='') -> NoReturn:
         self.display.setText(text)
         self.display.setFocus()
 
-    def displayText(self):
+    def displayText(self) -> str:
         return self.display.text()
 
-    def _clearDisplay(self):
+    def _clearDisplay(self) -> NoReturn:
         self.setDisplayText()
 
-    def _clearAll(self):
+    def _clearAll(self) -> NoReturn:
         self.first_value = ''
         self.second_value = ''
         self.operation = ''
@@ -278,7 +273,7 @@ class MainWindow(QMainWindow):
         self.number_of_minus = 0
         self.dot = 0
 
-    def _remove(self):
+    def _remove(self) -> NoReturn:
         value = self.displayText()
 
         if len(value) == 0:
@@ -288,7 +283,7 @@ class MainWindow(QMainWindow):
             self.display.setText(value)
 
 
-    def _ending(self):
+    def _ending(self) -> NoReturn:
         self.input_processing()
         if self.operation == '%' and self.first_value != '' and self.second_value == '':
             return
@@ -319,7 +314,7 @@ class MainWindow(QMainWindow):
         self.setDisplayText(str(self.first_value))
 
 
-    def _additing(self):
+    def _additing(self) -> NoReturn:
         self.input_processing()
         if self.first_value == '':
             return
@@ -337,7 +332,7 @@ class MainWindow(QMainWindow):
             self.second_value = '' 
             return
 
-    def _percent(self):
+    def _percent(self) -> NoReturn:
         self.input_processing()
         if self.first_value == '':
             return
@@ -352,7 +347,7 @@ class MainWindow(QMainWindow):
             self.second_value = ''
             return
 
-    def _multiplication(self):
+    def _multiplication(self) -> NoReturn:
         self.input_processing()
         if self.first_value == '':
             return
@@ -371,7 +366,7 @@ class MainWindow(QMainWindow):
             return
 
 
-    def _substracting(self):
+    def _substracting(self) -> NoReturn:
         self.input_processing()
         if self.operation == '/' and self.second_value == 0:
             self._clearAll()
@@ -404,7 +399,7 @@ class MainWindow(QMainWindow):
             self.history.addItem(self.operation)
             return
 
-    def _division(self):
+    def _division(self) -> NoReturn:
         self.input_processing()
         if self.first_value == '':
             return
