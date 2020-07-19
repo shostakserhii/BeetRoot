@@ -2,7 +2,7 @@ import requests
 import json
 import sys
 
-from datetime import date
+from typing import List, Dict, NoReturn
 from datetime import datetime
 from PyQt5.QtCore import Qt, QSize
 from PyQt5 import QtCore, QtWidgets
@@ -24,15 +24,14 @@ class MainWindow(QMainWindow):
         super().__init__(*args, **kwargs)
         self.widget = QWidget()
         self.setCentralWidget(self.widget)
-        self.number_of_days = 1
-        self.option = 0
+        self.number_of_days: int = 1
+        self.option: int = 0
         self.setWindowTitle("Weather App")
         self.setFixedSize(500, 100)
         self.mainLayout = QVBoxLayout()
         self._horizontal_layout = QHBoxLayout()
         self.mainLayout.addLayout(self._horizontal_layout)
         self.widget.setLayout(self.mainLayout)
-        self.resource = ''
         self.display = QLineEdit(self)
         self.OkButton = QPushButton('OK', self)
         self.nameLabel = QLabel(self)
@@ -47,20 +46,20 @@ class MainWindow(QMainWindow):
         self._horizontal_layout.addWidget(self.OkButton)
         self.mainLayout.addWidget(self.combo)
 
-        self.display.setStyleSheet("color: blue;"
+        self.display.setStyleSheet("color: black;"
                         "background-color: yellow;"
                         "selection-color: yellow;"
                         "selection-background-color: blue;")
         self.OkButton.clicked.connect(self._clickMethod)
         self.combo.activated[str].connect(self.options) 
     
-    def options(self, value):
+    def options(self, value: str) -> NoReturn:
         if value == '5 Days':
             self.number_of_days = 5
         else:
             self.number_of_days = 1
 
-    def _add_QLabels(self):
+    def _add_QLabels(self) -> NoReturn:
         self.weather = QLabel()
         self.weather_main = QLabel()
         self.weather_wind = QLabel()
@@ -73,87 +72,95 @@ class MainWindow(QMainWindow):
         self.mainLayout.addWidget(self.weather_main)
         self.mainLayout.addWidget(self.weather_wind)
         self.mainLayout.addWidget(self.weather_sun)
-        pass
-
-    def _remove_QLabels(self):
-        self.weather.clear()
+        self.weather.show()
         self.weather_main.hide()
         self.weather_wind.hide()
         self.weather_sun.hide()
 
-    def _clickMethod(self):
+    def _clickMethod(self) -> None:
         if self.option == 0:
             self._add_QLabels()
             self.option += 1
-        elif self.option != 0:
-            self._remove_QLabels()
-            self.option = 0
-
+        self.weather.clear()
+        self.weather_main.clear()
+        self.weather_wind.clear()
+        self.weather_sun.clear()
+        city: str = self.display.text()
         if self.number_of_days == 1:
+            self.weather_main.show()
+            self.weather_wind.show()
+            self.weather_sun.show()
             self.setFixedSize(500, 500)
-            city = self.display.text()
             try:
-                resource = requests.get('http://api.openweathermap.org/data/2.5/weather?', {'q':city, 'units': 'metric', 'appid':'a5c5f26e7e133daa411606be2347d43c', 'lang':'ua'})
+                resource = requests.get('http://api.openweathermap.org/data/2.5/weather?',
+                                        {'q':city, 
+                                         'units': 'metric',
+                                         'appid':'a5c5f26e7e133daa411606be2347d43c',
+                                         'lang':'ua'})
                 resource = resource.json()
                 self.show_weather_1(resource)
-            except Exception:
+            except Exception as e:
+                print(e)
                 return
         else:    
+            self.weather_main.hide()
+            self.weather_wind.hide()
+            self.weather_sun.hide()
             self.setFixedSize(500, 250)
-            city = self.display.text()
             try:
-                resource = requests.get('http://api.openweathermap.org/data/2.5/forecast?', {'q':city, 'units': 'metric', 'appid':'a5c5f26e7e133daa411606be2347d43c', 'lang':'ua'})
-                resource = resource.json()
+                resource: dict = requests.get('http://api.openweathermap.org/data/2.5/forecast?',
+                                        {'q':city,
+                                         'units': 'metric',
+                                         'appid':'a5c5f26e7e133daa411606be2347d43c',
+                                         'lang':'ua'})
+                resource: dict = resource.json()
                 self.show_weather_5(resource)
             except Exception:
                 return
             
-    def show_weather_1(self, resource):
-        for item in resource.json().keys():
+    def show_weather_1(self, resource: dict) -> NoReturn:
+        for item in resource.keys():
                 if item == 'weather':
                     self.weather.setText(f"""
 WEATHER
 
-condition: {resource.json()[item][0]['main']}
-description: {resource.json()[item][0]['description']}""") 
+condition: {resource[item][0]['main']}
+description: {resource[item][0]['description']}""") 
                 
                 if item == 'main':
                     self.weather_main.setText(f"""
 TEMPERATURE
 
-Temperature: {resource.json()[item]['temp']}
-Feels like: {resource.json()[item]['feels_like']}
-Min temperature: {resource.json()[item]['temp_min']}
-Max temperature: {resource.json()[item]['temp_max']}
-Pressure: {resource.json()[item]['pressure']}
-Humidity: {resource.json()[item]['humidity']}""")
+Temperature: {resource[item]['temp']}
+Feels like: {resource[item]['feels_like']}
+Min temperature: {resource[item]['temp_min']}
+Max temperature: {resource[item]['temp_max']}
+Pressure: {resource[item]['pressure']}
+Humidity: {resource[item]['humidity']}""")
                 
                 if item == 'wind':
                     self.weather_wind.setText(f"""
 WIND
 
-Speed: {resource.json()[item]['speed']} meter/sec")
-Direction: {resource.json()[item]['deg']}°""")
+Speed: {resource[item]['speed']} meter/sec")
+Direction: {resource[item]['deg']}°""")
                 
                 if item == 'sys':
                     self.weather_sun.setText(f"""
 SUN
 
-"Sunrise: {resource.json()[item]['sunrise']}
-"Sunset: {resource.json()[item]['sunset']}""")
+"Sunrise: {resource[item]['sunrise']}
+"Sunset: {resource[item]['sunset']}""")
 
-    def show_weather_5(self, resource):
-        if self.option != 0:
-            self._remove_QLabels()
-            self.option = 0
-        days = []
+    def show_weather_5(self, resource: dict) -> NoReturn:
+        days: list = []
         for i in resource['list']:
             if ("15:00:00") in i['dt_txt']:
                 days.append(f"{i['dt_txt']:10}, {int(i['main']['temp'])}, {i['weather'][0]['description']}")
         self.weather.setText("\n\n".join(map(str, days))) 
 
 
-def main_window():
+def main_window() -> NoReturn:
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()

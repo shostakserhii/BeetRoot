@@ -106,7 +106,7 @@ def validation_with_optional_value_return(inputing: str, category: str) -> Optio
 
     except ValueError as er:
         print(er)"""
-def new_user(first_name, second_name, phone, city, full_name) -> User:
+def new_user(first_name: str, second_name: str, phone: str, city: str, full_name: str) -> User:
     new_user = User(first_name, second_name, phone, city, full_name)
     return new_user
 

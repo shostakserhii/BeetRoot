@@ -66,7 +66,7 @@ class MainWindow(QMainWindow):
     def _createButtons(self) -> NoReturn:
         self.buttons: set = {}
         self.buttonLayout = QGridLayout()
-        buttons: Json = [
+        buttons: dict = [
             {
                 'name':'C',
                 'row':0,
@@ -181,7 +181,7 @@ class MainWindow(QMainWindow):
                                    buttonConfig.get('colSpan',1))
 
 
-    def change_text(self, text) -> NoReturn:
+    def change_text(self, text) -> None:
         if self.first_value != '' and self.operation == '':
             self.first_value = ''
             self.history.clear()
@@ -216,7 +216,7 @@ class MainWindow(QMainWindow):
             elif button_name == '.':
                 btn.clicked.connect(self._dotting)                
 
-    def _dotting(self) -> NoReturn:
+    def _dotting(self) -> None:
         value = self.displayText()
         if '.' in value:
             return
@@ -283,7 +283,7 @@ class MainWindow(QMainWindow):
             self.display.setText(value)
 
 
-    def _ending(self) -> NoReturn:
+    def _ending(self) -> None:
         self.input_processing()
         if self.operation == '%' and self.first_value != '' and self.second_value == '':
             return
@@ -314,7 +314,7 @@ class MainWindow(QMainWindow):
         self.setDisplayText(str(self.first_value))
 
 
-    def _additing(self) -> NoReturn:
+    def _additing(self) -> None:
         self.input_processing()
         if self.first_value == '':
             return
@@ -332,7 +332,7 @@ class MainWindow(QMainWindow):
             self.second_value = '' 
             return
 
-    def _percent(self) -> NoReturn:
+    def _percent(self) -> None:
         self.input_processing()
         if self.first_value == '':
             return
@@ -347,7 +347,7 @@ class MainWindow(QMainWindow):
             self.second_value = ''
             return
 
-    def _multiplication(self) -> NoReturn:
+    def _multiplication(self) -> None:
         self.input_processing()
         if self.first_value == '':
             return
@@ -366,7 +366,7 @@ class MainWindow(QMainWindow):
             return
 
 
-    def _substracting(self) -> NoReturn:
+    def _substracting(self) -> None:
         self.input_processing()
         if self.operation == '/' and self.second_value == 0:
             self._clearAll()
@@ -399,7 +399,7 @@ class MainWindow(QMainWindow):
             self.history.addItem(self.operation)
             return
 
-    def _division(self) -> NoReturn:
+    def _division(self) -> None:
         self.input_processing()
         if self.first_value == '':
             return
