@@ -9,7 +9,7 @@ from os import path
 from typing import Dict, List, Union, Optional, NoReturn
 from PyQt5.QtCore import Qt, QSize
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import (QApplication, 
+from PyQt5.QtWidgets import (QApplication,
                              QWidget,
                              QHBoxLayout,
                              QVBoxLayout,
@@ -20,6 +20,10 @@ from PyQt5.QtWidgets import (QApplication,
                              QSizePolicy)
 
 country: str = ''
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs) -> NoReturn:
@@ -58,10 +62,18 @@ class MainWindow(QMainWindow):
             self.height += 10
         country = self.display.text()
         main_body_function()
+<<<<<<< Updated upstream
         connection = psycopg2.connect(host='localhost', database='postgres', port=5432, user='postgres', password='1111')
         inserting_weather_to_capital(connection, country)
         cursor = connection.cursor()
         cursor.execute(f"select weather_in_capital.capitalname, weather_in_capital.weather_description, weather_in_capital.temperature from weather_in_capital left join countries on weather_in_capital.capitalname = countries.capitalname")
+=======
+        connection = psycopg2.connect(host='localhost', database='postgres', port=5432, user='postgres',
+                                      password='1111')
+        inserting_weather_to_capital(connection, country)
+        cursor = connection.cursor()
+        cursor.execute("select weather_in_capital.capitalname, weather_in_capital.weather_description, weather_in_capital.temperature from weather_in_capital left join countries on weather_in_capital.capitalname = countries.capitalname")
+>>>>>>> Stashed changes
         correct = cursor.fetchall()
         connection.commit()
         cursor.close()
@@ -70,24 +82,39 @@ class MainWindow(QMainWindow):
         except Exception:
             self.weather_in_capital.setText(f"{country} doesn't exist in Universe")
         self.mainLayout.addWidget(self.weather_in_capital)
+<<<<<<< Updated upstream
         self.weather_in_capital.show()        
+=======
+        self.weather_in_capital.show()
+
+>>>>>>> Stashed changes
 
 def create_countries_table(connection) -> NoReturn:
     if path.exists("capitals.json"):
         json_file = open("capitals.json")
         data: Dict = json.load(json_file)
     else:
-        source = urllib.request.urlopen("http://techslides.com/demos/country-capitals.json") 
+        source = urllib.request.urlopen("http://techslides.com/demos/country-capitals.json")
         data = json.loads(source.read())
-        with open('capitals.json','w') as f:
+        with open('capitals.json', 'w') as f:
             json.dump(data, f, indent=4)
+<<<<<<< Updated upstream
     try: 
+=======
+    try:
+>>>>>>> Stashed changes
         cursor = connection.cursor()
         cursor.execute('CREATE TABLE countries(capitalname varchar(40) primary key, countryname varchar(40))')
         print("countries created")
         for item in data:
+<<<<<<< Updated upstream
             if item['CapitalName'] not in ('N/A','Jerusalem', 'Kingston', 'Washington'):
                 cursor.execute(f"INSERT INTO countries(countryname, capitalname) VALUES(%s, %s)", (item['CountryName'], item['CapitalName']))
+=======
+            if item['CapitalName'] not in ('N/A', 'Jerusalem', 'Kingston', 'Washington'):
+                cursor.execute(f"INSERT INTO countries(countryname, capitalname) VALUES(%s, %s)",
+                               (item['CountryName'], item['CapitalName']))
+>>>>>>> Stashed changes
                 connection.commit()
         print("countries added")
         cursor.close()
@@ -97,12 +124,17 @@ def create_countries_table(connection) -> NoReturn:
         cursor.close()
         connection.rollback()
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 def create_list_of_capitals(connection) -> NoReturn:
     cursor = connection.cursor()
     cursor.execute('CREATE TABLE weather_in_capital(capitalname varchar(40), foreign key(capitalname) references countries(capitalname), weather_description varchar(40), temperature integer)')
     cursor.close()
     connection.commit()
     print("capitals created")
+<<<<<<< Updated upstream
 
 # COMING SOON
 
@@ -125,6 +157,8 @@ def create_list_of_capitals(connection) -> NoReturn:
 #             except Exception:
 #                 continue
 #     cursor.close()
+=======
+>>>>>>> Stashed changes
 
 def inserting_weather_to_capital(connection, country) -> NoReturn:
     cursor = connection.cursor()
@@ -133,17 +167,31 @@ def inserting_weather_to_capital(connection, country) -> NoReturn:
     cities: List = cursor.fetchall()
     try:
         database_weather = requests.get('http://api.openweathermap.org/data/2.5/weather?',
+<<<<<<< Updated upstream
                                         {'q': cities[0][0], 
                                         'units': 'metric',
                                         'appid':'a5c5f26e7e133daa411606be2347d43c',
                                         'lang':'ua'})
         database_weather = database_weather.json()
         cursor.execute(f"insert into weather_in_capital (capitalname, weather_description, temperature) values (%s, %s, %s)", (cities[0][0], database_weather['weather'][0]['description'], database_weather['main']['temp']))
+=======
+                                        {'q': cities[0][0],
+                                         'units': 'metric',
+                                         'appid': 'a5c5f26e7e133daa411606be2347d43c',
+                                         'lang': 'ua'})
+        database_weather = database_weather.json()
+        cursor.execute(f"insert into weather_in_capital (capitalname, weather_description, temperature) values (%s, %s, %s)",
+            (cities[0][0], database_weather['weather'][0]['description'], database_weather['main']['temp']))
+>>>>>>> Stashed changes
         connection.commit()
     except Exception:
         pass
     finally:
         cursor.close()
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 def main_body_function() -> NoReturn:
     connection = psycopg2.connect(host='localhost', database='postgres', port=5432, user='postgres', password='1111')
@@ -152,14 +200,47 @@ def main_body_function() -> NoReturn:
     cursor.execute('DROP TABLE IF EXISTS weather_in_capital')
     cursor.execute('DROP TABLE IF EXISTS countries')
     create_countries_table(connection)
+<<<<<<< Updated upstream
     create_list_of_capitals(connection)  
     connection.close()
 
+=======
+    create_list_of_capitals(connection)
+    connection.close()
+
+
+>>>>>>> Stashed changes
 def main_window() -> NoReturn:
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
 
+
 if __name__ == "__main__":
-    main_window()        
+    main_window()
+
+
+
+# COMING SOON
+
+# def inserting_weather_to_capitals_all(connection) -> NoReturn:
+#     cursor = connection.cursor()
+#     cursor.execute('select capitalname from countries')
+#     cities = cursor.fetchall()
+#     print(f"cities: {cities}")
+#     for item in cities:
+#         if item not in ('N/A','Jerusalem'):
+#             try:
+#                 database_weather = requests.get('http://api.openweathermap.org/data/2.5/weather?',
+#                                                 {'q': item,
+#                                                 'units': 'metric',
+#                                                 'appid':'a5c5f26e7e133daa411606be2347d43c',
+#                                                 'lang':'ua'})
+#                 database_weather = database_weather.json()
+#                 cursor.execute(f"insert into weather_in_capital (capitalname, weather_description, temperature) values (%s, %s, %s)", (item, database_weather['weather'][0]['description'], database_weather['main']['temp']))
+#                 connection.commit()
+#             except Exception:
+#                 continue
+#     cursor.close()
+
