@@ -66,7 +66,8 @@ class MainWindow(QMainWindow):
         connection.commit()
         cursor.close()
         try:
-            self.weather_in_capital.setText(f"""Country: {country},
+            self.weather_in_capital.setText(f"""
+                                                Country: {country},
                                                 Capital: {correct[0][0]},
                                                 Weather: {correct[0][1]},
                                                 Temperature: {correct[0][2]}""")
