@@ -90,7 +90,7 @@ def create_countries_table(connection) -> NoReturn:
         print("countries created")
         for item in data:
             if item['CapitalName'] not in ('N/A','Jerusalem', 'Kingston', 'Washington'):
-                cursor.execute(f"INSERT INTO countries(countryname, capitalname) VALUES(%s, %s)", (item['CountryName'], item['CapitalName']))
+                cursor.execute("INSERT INTO countries(countryname, capitalname) VALUES(%s, %s)", (item['CountryName'], item['CapitalName']))
                 connection.commit()
         print("countries added")
         cursor.close()
@@ -119,7 +119,7 @@ def inserting_weather_to_capital(connection, country) -> NoReturn:
                                         'appid':'a5c5f26e7e133daa411606be2347d43c',
                                         'lang':'ua'})
         database_weather = database_weather.json()
-        cursor.execute(f"insert into weather_in_capital (capitalname, weather_description, temperature) values (%s, %s, %s)", (cities[0][0], database_weather['weather'][0]['description'], database_weather['main']['temp']))
+        cursor.execute("insert into weather_in_capital (capitalname, weather_description, temperature) values (%s, %s, %s)", (cities[0][0], database_weather['weather'][0]['description'], database_weather['main']['temp']))
         connection.commit()
     except Exception:
         pass
